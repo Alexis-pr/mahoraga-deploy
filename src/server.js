@@ -7,7 +7,8 @@ const apiRoutes = require("./routes");
 dotenv.config();
 
 const app = express();
-const port = process.env.PORT || process.env.APP_PORT || 3000;
+// Este parseo prioriza APP_PORT para que frontend y backend usen el mismo puerto local.
+const port = Number(process.env.APP_PORT || process.env.PORT) || 3000;
 
 app.use(cors());
 app.use(express.json());

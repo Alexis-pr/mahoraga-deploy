@@ -2,7 +2,6 @@ import{createUser, UserCreateDTO} from '../conect/createUser.js'
 import {getUsers} from '../conect/readUser.js'
 import { validateUsername, validatePassword, showAlert } from '../landingPageJs/validation.js';
 
-getUsers(); // First we bring in all the users to avoid errors, then
 export function initAuthModal() {
     const authModal = document.getElementById('authModal');
     const authWrapper = document.getElementById('authWrapper');
@@ -282,7 +281,7 @@ export function initAuthModal() {
 
         } catch (error) {
             console.error(error);
-            showAlert(registerForm, 'Error creating account. Try again later.', 'error');
+            showAlert(registerForm, error.message || 'Error creating account. Try again later.', 'error');
         }
     });
 }

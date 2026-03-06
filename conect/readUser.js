@@ -1,6 +1,7 @@
-// function to get all the users 
+// Esta función trae usuarios desde el backend Express.
 export async function getUsers() {
-    const response = await fetch('http://localhost:3000/users');
+    const apiHost = window.location.hostname;
+    const response = await fetch(`http://${apiHost}:3000/api/users`);
     if (!response.ok) {
         throw new Error('Error fetching users');
     }
