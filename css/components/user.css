@@ -1,0 +1,70 @@
+.user-section {
+    display: flex;
+    background-color: #1e1e1e;
+    align-items: center;
+    gap: 12px;
+
+    padding: 12px;
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.186);
+
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: white;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
+
+.user-section:hover {
+    background: #2a2a2a;
+     transform: translateX(6px) scale(1.02);
+}
+
+/* IMAGEN */
+
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.262);
+}
+
+.user-avatar:hover{
+    background-color: rgb(65, 65, 65);
+}
+
+.user-avatar i {
+    font-size: 1.2rem;
+}
+
+/* LOGOS */
+
+.logo {
+    width: 65px;
+}
+
+.logo-python {
+    width: 40px;
+}
+
+.logo-html {
+    width: 40px;
+}
+
+.logo-css {
+    width: 40px;
+}
+
+.logo-javascript {
+    width: 40px;
+    border-radius: 8px;
+}
+
+.logo-sql {
+    width: 50px;
+}
+

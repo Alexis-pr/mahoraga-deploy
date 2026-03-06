@@ -1,0 +1,417 @@
+
+
+
+.modalProfile {
+  background: rgb(0, 0, 0);
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  width: 550px;
+  height: auto;
+  border: solid 1px #ffffff6e;
+  
+}
+
+.container-one{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+}
+
+.photo {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background-color: #1d1d1d;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    overflow: hidden;
+    transition: 0.3s ease;
+    border: 3px solid rgb(255, 255, 255);
+
+
+}
+
+/* Icono inicial */
+.camera-icon {
+    font-size: 30px;
+    color: #6b7280;
+}
+
+
+.photo.has-image:hover .overlay {
+    opacity: 1;
+}
+
+.actions {
+    display: flex;
+    gap: 15px;
+}
+
+.actions i {
+    color: white;
+    font-size: 22px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.actions i:hover {
+    transform: scale(1.2);
+}
+
+
+.overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.photo.has-image:hover .overlay {
+    opacity: 1;
+}
+
+.overlay i {
+    color: white;
+    font-size: 28px;
+}
+
+.photo:hover{
+    background-color: rgb(60, 60, 60);
+
+}
+
+input:hover{
+    background-color: rgba(0, 0, 0, 0.417);
+}
+.profile-view{
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: 2rem;
+}
+.photo i{
+   font-size: 1.5rem;
+   color: rgb(189, 189, 189);
+
+}
+
+h2 {
+    color: white;
+    font-weight: 300;
+    text-decoration: underline;
+    text-underline-offset: 8px; /* ajusta este valor a tu gusto */
+}
+
+.exitLogo{
+    border: solid 1px #ffffff6e;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+      display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+.exitLogo:hover{
+    background-color: rgba(255, 255, 255, 0.118);
+    transform: rotate(90deg);
+}
+.exitLogo i{
+color: rgb(148, 148, 148); ;
+font-size: 1.5rem;
+}
+
+.container-two {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(4, 160px); 
+    gap: 1rem;
+}
+
+
+
+.total-process{
+    grid-column: 1/4;
+}
+.your-level{
+       border: solid 1px #ffffff;
+       border-radius: 1rem;
+       overflow: hidden;
+     
+}
+.answers-mug{
+    grid-column: 1/3;
+}
+
+.logros{
+    grid-column: 1/4;
+    grid-row: 3/5;
+}
+
+.cardProfile {
+    background-color: #151515;
+    border: 1px solid rgba(255, 255, 255, 0.197);
+    color: white;
+    transition: all 0.2s ease;
+    border-radius: 1rem;
+    padding: 1rem;
+}
+
+
+h3{
+    color: rgb(255, 255, 255);
+    margin: 0;
+}
+
+
+.process-load p{
+    color: white;
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.process-load {
+    background-color: #ffffff13;
+    height: 80px;
+    border-radius: 10rem;
+box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+
+    overflow: hidden;
+    margin: 1rem 0 1rem 0;
+}
+
+.load {
+background: linear-gradient(135deg, #991b1b, #7f1d1d, #450a0a);
+
+    width: 20%; 
+    height: 100%; 
+    margin: 0;
+    border-radius:10rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.answers-mug h3 {
+    margin: 0 0 16px 0;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.stat {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+
+}
+
+.label {
+    font-weight: 600;
+    font-size: 0.9rem;
+    width: 70px;
+}
+
+.label.correct { color: #22c55e; }
+.label.incorrect { color: #ef4444; }
+
+.bar-container {
+    flex: 1;
+    position: relative;
+    height: 8px;
+    background: #ffffff0f;
+    border-radius: 99px;
+}
+
+.bar {
+    height: 100%;
+    border-radius: 99px;
+}
+
+.correct-bar { background: #22c55e; }
+.incorrect-bar { background: #ef4444; }
+
+.percentage {
+    position: absolute;
+    bottom: -18px;
+    right: 0;
+    font-size: 0.75rem;
+    color: #ffffff;
+}
+
+.your-level img{
+    width: 200px;
+    border-radius: 1rem;
+    font-size: 3rem;
+}
+
+.your-level p{
+    position: relative;
+    bottom: 140px;
+    margin-left:1rem ;
+    color: white;
+    font-size: 1.5rem;
+    font-weight: bold;
+    z-index: 1000;
+
+}
+.content {
+    transition: transform 0.3s ease;
+}
+
+.your-level:hover .content {
+    transform: scale(1.1);
+}
+
+.achievement-item img{
+    width: 30px;
+    height: 30px;
+    margin-left: 0.5rem;
+}
+.achievements-card h3 {
+    margin: 0 0 16px 0;
+    font-size: 1rem;
+    font-weight: 600;
+    color: white;
+}
+
+.achievement-item {
+    padding: 12px 0;
+    border-bottom: 1px solid #f0f0f01a;
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+
+    transition: all 0.2s ease-in;
+}
+.achievement-item:hover{
+    background-color: rgba(255, 255, 255, 0.126);
+    border-radius: 1rem;
+}
+.achievement-item:last-child {
+    border-bottom: none;
+}
+
+.achievement-item p {
+    margin: 0;
+    font-size: 0.875rem;
+    color: #ffffff;
+    line-height: 1.5;
+}
+
+.achievement-item.active p {
+    color: #22c55e;
+    font-weight: 600;
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+        filter: blur(4px);
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+        filter: blur(0);
+    }
+}
+
+
+
+/* Container one */
+.profile-view {
+    opacity: 0;
+    animation: slideUp 0.5s ease forwards;
+    animation-delay: 0.4s;
+}
+
+.exit-profile {
+    opacity: 0;
+    animation: slideUp 0.5s ease forwards;
+    animation-delay: 0.5s;
+}
+
+/* Container two */
+.total-process {
+    opacity: 0;
+    animation: slideUp 0.5s ease forwards;
+    animation-delay: 0.6s;
+}
+
+.answers-mug {
+    opacity: 0;
+    animation: slideUp 0.5s ease forwards;
+    animation-delay: 0.7s;
+}
+
+.your-level {
+    opacity: 0;
+    animation: slideUp 0.5s ease forwards;
+    animation-delay: 0.8s;
+}
+
+.logros {
+    opacity: 0;
+    animation: slideUp 0.5s ease forwards;
+    animation-delay: 0.8s;
+}
+
+/* Achievement items dentro de logros */
+.achievement-item {
+    opacity: 0;
+    animation: slideUp 0.5s ease forwards;
+}
+
+.achievement-item:nth-child(1) { animation-delay: 0.6s; }
+.achievement-item:nth-child(2) { animation-delay: 0.8s; }
+.achievement-item:nth-child(3) { animation-delay: 1s; }
+.achievement-item:nth-child(4) { animation-delay: 1.2s; }
+.achievement-item:nth-child(5) { animation-delay: 1.4s; }
+.achievement-item:nth-child(6) { animation-delay: 1.6s; }
+
+.modalProfile {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.9);
+  opacity: 0;
+  z-index: 1001;
+  transition: 0.3s ease;
+  display: none;
+}
+
+.modalProfile.active {
+  display: block;
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  opacity: 0;
+  z-index: 1000;
+  transition: 0.3s ease;
+  display: none;
+}
+
+.modal-backdrop.active {
+  display: block;
+  opacity: 1;
+}

@@ -1,0 +1,91 @@
+/* CONTENEDOR */
+
+.technologies {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 30px;
+}
+
+
+/* BOTÓN BASE */
+
+.tech-btn {
+    width: 100%;
+    padding: 14px 16px;
+    border-radius: 14px;
+    border: none;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    color: #fff;
+
+    font-size: 14px;
+    font-weight: 500;
+
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 5px 12px rgba(0,0,0,0.3);
+}
+
+
+/* HOVER */
+
+.tech-btn:hover {
+    transform: translateX(6px) scale(1.02);
+}
+
+.python:hover {
+    background: #3777abb4;
+}
+
+.css:hover {
+    background: #2965f1b9;
+}
+
+.html:hover {
+    background: #e34f26b7;
+}
+
+.javascript:hover {
+    background: #f7de1ec5;
+}
+
+.sql:hover {
+    background: #293c92ad;
+}
+
+/* BACKGROUND BOTONES */
+
+.python {
+    background: #3777ab7c;
+}
+
+.html {
+    background: #e34f267c;
+}
+
+.css {
+    background: #2965f183;
+}
+
+.javascript {
+    background: #f7de1e86;
+}
+
+.sql {
+    background: #293d9273;
+}
+
+/* TEXTO */
+
+.tech-name {
+    font-weight: 600;
+}
+
+.percent {
+    font-size: 13px;
+    opacity: 0.7;
+}

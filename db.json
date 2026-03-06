@@ -1,0 +1,40 @@
+{
+  "users": [
+    {
+      "id": "0daa",
+      "user_name": "Juancho",
+      "email": "",
+      "password": "123456",
+      "id_status": "is_active",
+      "id_level": "Junior",
+      "id_language": "Es"
+    },
+    {
+      "id": "c065",
+      "user_name": "thomas",
+      "email": "",
+      "password": "555555",
+      "id_status": "is_active",
+      "id_level": "Junior",
+      "id_language": "Es"
+    },
+    {
+      "id": "fa9b",
+      "user_name": "tomas2",
+      "email": "",
+      "password": "123456",
+      "id_status": "true",
+      "id_level": "Junior",
+      "id_language": "espanish"
+    },
+    {
+      "id": "98b4",
+      "user_name": "daniel",
+      "email": "",
+      "password": "123456",
+      "id_status": "true",
+      "id_level": "Junior",
+      "id_language": "espanish"
+    }
+  ]
+}

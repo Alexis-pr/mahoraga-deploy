@@ -1,0 +1,64 @@
+
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem 1rem 0 1rem;
+    z-index: 1000;
+    transition: background-color 0.3s ease, backdrop-filter 0.3s ease, box-shadow 0.3s ease;
+}
+
+header h2 {
+    font-size: 2rem;
+}
+
+.container-logo {
+    display: flex;
+    align-items: center;
+    width: 800px;
+}
+
+.buttons-login {
+    display: flex;
+    align-items: center;
+}
+
+.logo img {
+    width: 70px;
+    margin-right: 1rem;
+    animation: girar 20s linear infinite;
+}
+
+.line {
+    margin: 0 1rem;
+    font-size: 3rem;
+    font-weight: 100;
+    color: var(--color-line);
+}
+
+/* Sign In/Up Buttons */
+.sign-in {
+    border: none;
+    background: transparent;
+    transition: all 0.3s ease;
+}
+
+.sign-in:hover {
+    text-shadow: var(--text-glow);
+}
+
+.sign-up {
+    border-radius: 10px;
+    border: solid 1.5px var(--border-signup);
+    background-color: var(--bg-signup);
+    transition: all 0.2s ease;
+    box-shadow: var(--shadow-soft);
+}
+
+.sign-up:hover {
+    background-color: var(--bg-signup-hover);
+}

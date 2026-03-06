@@ -1,0 +1,72 @@
+
+.separador {
+    margin-top: 12rem;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    background-color: #000000;
+}
+
+.mahoragaLogo {
+    filter: brightness(70%);
+    width: 800px;
+}
+
+.about {
+    background-color: #000000;
+    position: relative;
+    z-index: 1;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.we {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    overflow: hidden;
+    max-height: 800px;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.column-up {
+    animation: scrollUp 20s linear infinite;
+}
+
+.column-down {
+    animation: scrollDown 20s linear infinite;
+}
+
+.cardWe img {
+    width: 250px;
+    height: 250px;
+    border-radius: 10px;
+    object-fit: cover;
+    object-position: top;
+    margin: 1rem;
+    transition: all 0.3s ease;
+}
+
+.cardWe img:hover {
+    transform: scale(1.1);
+}
+
+.column:hover {
+    animation-play-state: paused;
+}
+
+.descriptionEmpresa {
+    margin-top: 2rem;
+    width: 500px;
+    line-height: 2;
+    text-shadow: var(--shadow-glow-medium);
+}
+
+.descriptionEmpresa h3 {
+    font-size: 3rem;
+}
