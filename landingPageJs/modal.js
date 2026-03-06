@@ -1,5 +1,5 @@
 import{createUser, UserCreateDTO} from '../conect/createUser.js'
-import {getUsers} from '../conect/readUser.js'
+import { loginUser } from '../conect/readUser.js'
 import { validateUsername, validatePassword, showAlert } from '../landingPageJs/validation.js';
 
 export function initAuthModal() {
@@ -185,10 +185,8 @@ export function initAuthModal() {
         const usernameOrEmail = document.getElementById('loginUser').value.trim();
         const password = document.getElementById('loginPass').value;
 
-        // Validaciones básicas
-        const usernameError = validateUsername(usernameOrEmail);
-        if (usernameError) {
-            showAlert(loginForm, usernameError, 'error');
+        if (!usernameOrEmail) {
+            showAlert(loginForm, 'Email o username es requerido', 'error');
             return;
         }
 
@@ -199,26 +197,16 @@ export function initAuthModal() {
         }
 
         try {
-            // Get all users from the API
-            const users = await getUsers();
-
-            // Search user to name or email
-            const user = users.find(u => u.user_name === usernameOrEmail || u.email === usernameOrEmail);
-
-            if (!user) {
-                showAlert(loginForm, 'User not found', 'error');
-                return;
-            }
-
-            if (user.password !== password) {
-                showAlert(loginForm, 'Incorrect password', 'error');
+            const { isValid, user } = await loginUser(usernameOrEmail, password);
+            if (!isValid || !user) {
+                showAlert(loginForm, 'Credenciales invalidas', 'error');
                 return;
             }
 
             // Login success
             showAlert(loginForm, `Welcome, ${user.user_name}!`, 'success');
 
-            // save data in localStorage to persist session
+            // save data in sessionStorage to persist session
             sessionStorage.setItem('loggedInUser', JSON.stringify(user));
 
             // redirect to dashboard
