@@ -1,5 +1,5 @@
 import{createUser, UserCreateDTO} from '../conect/createUser.js'
-import {getUsers} from '../conect/readUser.js'
+import {loginUser as loginUserRequest, LoginDTO} from '../conect/loginUser.js'
 import { validateUsername, validatePassword, showAlert } from '../landingPageJs/validation.js';
 
 export function initAuthModal() {
@@ -182,43 +182,39 @@ export function initAuthModal() {
     loginForm.addEventListener('submit', async (e) => {
         e.preventDefault();
 
+        // Este valor sale del input del front con id="loginUser" en index.html.
         const usernameOrEmail = document.getElementById('loginUser').value.trim();
+        // Este valor sale del input del front con id="loginPass" en index.html.
         const password = document.getElementById('loginPass').value;
 
-        // Validaciones básicas
-        const usernameError = validateUsername(usernameOrEmail);
-        if (usernameError) {
-            showAlert(loginForm, usernameError, 'error');
+        // Esta validacion evita enviar el form si el campo viene vacio.
+        if (!usernameOrEmail) {
+            showAlert(loginForm, 'Username o email es obligatorio', 'error');
             return;
         }
 
+        // Esta validacion reutiliza tu regla de password antes de llamar al backend.
         const passwordError = validatePassword(password);
         if (passwordError) {
             showAlert(loginForm, passwordError, 'error');
             return;
         }
 
+        // Este DTO empaqueta los valores capturados desde inputs del formulario.
+        const loginDTO = new LoginDTO({
+            identifier: usernameOrEmail,
+            password: password
+        });
+
         try {
-            // Get all users from the API
-            const users = await getUsers();
-
-            // Search user to name or email
-            const user = users.find(u => u.user_name === usernameOrEmail || u.email === usernameOrEmail);
-
-            if (!user) {
-                showAlert(loginForm, 'User not found', 'error');
-                return;
-            }
-
-            if (user.password !== password) {
-                showAlert(loginForm, 'Incorrect password', 'error');
-                return;
-            }
+            // Esta llamada envia el DTO al endpoint POST /api/auth/login.
+            const loginResponse = await loginUserRequest(loginDTO);
+            const user = loginResponse.data;
 
             // Login success
             showAlert(loginForm, `Welcome, ${user.user_name}!`, 'success');
 
-            // save data in localStorage to persist session
+            // Este sessionStorage guarda lo que retorno backend para mantener sesion.
             sessionStorage.setItem('loggedInUser', JSON.stringify(user));
 
             // redirect to dashboard
@@ -228,7 +224,7 @@ export function initAuthModal() {
 
         } catch (error) {
             console.error(error);
-            showAlert(loginForm, 'Error logging in. Try again later.', 'error');
+            showAlert(loginForm, error.message || 'Error logging in. Try again later.', 'error');
         }
     });
 }
