@@ -1,6 +1,5 @@
-import{createUser, UserCreateDTO} from '../conect/createUser.js'
-import { loginUser } from '../conect/readUser.js'
-import { validateUsername, validatePassword, showAlert } from '../landingPageJs/validation.js';
+import { createUser, UserCreateDTO, loginUser } from './authApi.js'
+import { validateUsername, validatePassword, validateLoginIdentifier, showAlert } from './validation.js';
 
 export function initAuthModal() {
     const authModal = document.getElementById('authModal');
@@ -187,9 +186,10 @@ export function initAuthModal() {
         // Este valor sale del input del front con id="loginPass" en index.html.
         const password = document.getElementById('loginPass').value;
 
-        // Esta validacion evita enviar el form si el campo viene vacio.
-        if (!usernameOrEmail) {
-            showAlert(loginForm, 'Email o username es requerido', 'error');
+        // Esta validacion acepta email valido o username valido para login.
+        const identifierError = validateLoginIdentifier(usernameOrEmail);
+        if (identifierError) {
+            showAlert(loginForm, identifierError, 'error');
             return;
         }
 
