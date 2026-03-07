@@ -1,5 +1,5 @@
 import{createUser, UserCreateDTO} from '../conect/createUser.js'
-import {loginUser as loginUserRequest, LoginDTO} from '../conect/loginUser.js'
+import { loginUser } from '../conect/readUser.js'
 import { validateUsername, validatePassword, showAlert } from '../landingPageJs/validation.js';
 
 export function initAuthModal() {
@@ -189,7 +189,7 @@ export function initAuthModal() {
 
         // Esta validacion evita enviar el form si el campo viene vacio.
         if (!usernameOrEmail) {
-            showAlert(loginForm, 'Username o email es obligatorio', 'error');
+            showAlert(loginForm, 'Email o username es requerido', 'error');
             return;
         }
 
@@ -200,16 +200,13 @@ export function initAuthModal() {
             return;
         }
 
-        // Este DTO empaqueta los valores capturados desde inputs del formulario.
-        const loginDTO = new LoginDTO({
-            identifier: usernameOrEmail,
-            password: password
-        });
-
         try {
-            // Esta llamada envia el DTO al endpoint POST /api/auth/login.
-            const loginResponse = await loginUserRequest(loginDTO);
-            const user = loginResponse.data;
+            // Esta llamada envia los valores capturados al endpoint de login del backend.
+            const { isValid, user } = await loginUser(usernameOrEmail, password);
+            if (!isValid || !user) {
+                showAlert(loginForm, 'Credenciales invalidas', 'error');
+                return;
+            }
 
             // Login success
             showAlert(loginForm, `Welcome, ${user.user_name}!`, 'success');
