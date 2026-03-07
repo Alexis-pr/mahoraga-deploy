@@ -10,17 +10,17 @@ export const consultationQuestion = async () => {
     }
 }
 
-export const createQuestion = async ({ id_topic, id_level, level_assign, translations }) => {
+export const createQuestion = async ({ id_topic, id_level, translations }) => {
     const client = await pool.connect()
     try {
         await client.query('BEGIN')
         const questionResult = await client.query(
             `
-            INSERT INTO question (id_topic, id_level, level_assign)
+            INSERT INTO question (id_topic, id_level)
             VALUES ($1, $2, $3)
-            RETURNING id_question
+            RETURNING *
             `,
-            [id_topic, id_level, level_assign]
+            [id_topic, id_level]
         )
         const { id_question } = questionResult.rows[0]
 
@@ -44,23 +44,32 @@ export const createQuestion = async ({ id_topic, id_level, level_assign, transla
     }
 }
 
-export const updateQuestion = async (id_question, id_topic, id_level, level_assign, translations) => {
+export const updateQuestion = async (id_question, id_topic, id_level, translations) => {
     const client = await pool.connect()
 
-    try{
+    try {
         await client.query('BEGIN')
-        const questionResult = await client.query(
+        await client.query(
             `
-            update question set 
-            id_topic = $1,
-            id_level = $2, 
-            level_assign = $3
+            UPDATE question
+            SET
+                id_topic = $1,
+                id_level = $2,
+            WHERE id_question = $4
             RETURNING id_question
             `,
-            [id_topic, id_level, level_assign]
+            [id_topic, id_level, id_question]
         )
-            const { id_question } = questionResult.rows[0]
 
+        await client.query(
+            `
+            DELETE FROM question_translation
+            WHERE id_question = $1
+            `,
+            [id_question]
+        )
+
+        if (Array.isArray(translations) && translations.length > 0) {
             for (const translation of translations) {
                 await client.query(
                     `
@@ -68,15 +77,43 @@ export const updateQuestion = async (id_question, id_topic, id_level, level_assi
                     VALUES ($1, $2, $3)
                     `,
                     [id_question, translation.id_language, translation.question_text]
-                    )
-                }
+                )
+            }
+        }
+
         await client.query('COMMIT')
         return { id_question }
     } catch (error) {
         await client.query('ROLLBACK')
-        console.error('Error creating questions :', error)
+        console.error('Error updating question :', error)
         throw error
     } finally {
         client.release()
     }
 }
+
+export const getQuestionByLevel = async (id_level) => {
+    try {
+        const res = await pool.query(
+            `
+            SELECT
+                q.id_question,
+                q.id_topic,
+                q.id_level,
+                qt.id_language,
+                qt.question_text
+            FROM question q
+            LEFT JOIN question_translation qt ON qt.id_question = q.id_question
+            WHERE q.id_level = $1
+            ORDER BY q.id_question, qt.id_language
+            `,
+            [id_level]
+        )
+        return res.rows
+    } catch (error) {
+        console.error(`Error: could not access the questions by level`, error)
+        throw error
+    }
+}
+
+
