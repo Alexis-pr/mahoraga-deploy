@@ -17,7 +17,7 @@ export const getUsers = async () =>{
 export const createUsers = async (user_name, email, password, user_status, id_language, id_level) => {
     const query = `
     INSERT INTO "user"
-    (User_name, email, password, user_status, id_language, id_level) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`;
+    (User_name, email, password, user_status, id_language, id_level) VALUES ($1, $2, crypt($3, gen_salt('bf')), $4, $5, $6) RETURNING *`;
     const values = [user_name, email, password, user_status, id_language, id_level];
 
     try {
@@ -35,7 +35,7 @@ export const loginUserQuery = async (l_login, l_password)=>{
     SELECT id_user, user_name, email, user_status, id_language, id_level
     FROM "user"
     WHERE (email = $1 OR user_name = $1)
-      AND password = $2
+      AND password = crypt($2, password)
     LIMIT 1
     `
     const values = [l_login, l_password]
