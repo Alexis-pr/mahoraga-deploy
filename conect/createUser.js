@@ -17,9 +17,12 @@ export class UserCreateDTO {
   }
 }
 
-// Esta URL usa el host actual del navegador para evitar cruces localhost/127.0.0.1.
-const API_HOST = window.location.hostname;
-const USERS_API_URL = `http://${API_HOST}:3000/api/users`;
+const API_ORIGIN =
+  window.location.port === '3000'
+    ? window.location.origin
+    : `${window.location.protocol}//${window.location.hostname}:3000`;
+
+const USERS_API_URL = `${API_ORIGIN}/api/users`;
 
 export async function createUser(userDTO) {
   const response = await fetch(USERS_API_URL, {
