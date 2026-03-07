@@ -1,4 +1,8 @@
-import { consultationQuestion, createQuestion } from './question.service.js'
+import {
+  consultationQuestion,
+  createQuestion,
+  getQuestionByLevel as getQuestionByLevelService
+} from './question.service.js'
 
 export const getQuestions = async (req, res) => {
     try {
@@ -6,15 +10,14 @@ export const getQuestions = async (req, res) => {
         res.json(data)
 
     } catch (error) {
-        res.status(500).json({ error: 'Error al obtener preguntas' })
+        res.status(500).json({ error: 'Error getting questions' })
     }
 }
 
-
 export const createQuestionRequest = async (req, res) => {
-    const { id_topic, id_level, level_assign, translations } = req.body
+    const { id_topic, id_level, translations } = req.body
 
-    if (!id_topic || !id_level || !level_assign || !Array.isArray(translations) || translations.length === 0) {
+    if (!id_topic || !id_level || !Array.isArray(translations) || translations.length === 0) {
         return res.status(400).json({
             error: 'Debes enviar id_topic, id_level, level_assign y translations (array no vacio).'
         })
@@ -31,7 +34,6 @@ export const createQuestionRequest = async (req, res) => {
         const newQuestion = await createQuestion({
             id_topic,
             id_level,
-            level_assign,
             translations
         })
         res.status(201).json({
@@ -43,3 +45,21 @@ export const createQuestionRequest = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 };
+
+export const getQuestionByLevel = async (req, res) => {
+    const { id_level } = req.params
+
+    if (!id_level) {
+        return res.status(400).json({ error: 'Debes indicar id_level en la ruta.' })
+    }
+
+    try {
+        const data = await getQuestionByLevelService(id_level)
+        res.json(data)
+    } catch (error) {
+        console.error('Error al obtener preguntas por nivel:', error)
+        res.status(500).json({
+            error: 'Error al obtener las preguntas por nivel.'
+        })
+    }
+}
