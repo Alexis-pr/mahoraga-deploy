@@ -15,10 +15,9 @@ export function initDashboardViewManager() {
 
   interviewButton?.addEventListener("click", () => {
     const topic = interviewButton.dataset.topic;
-    const difficulty = interviewButton.dataset.difficulty;
     const nodeId = interviewButton.dataset.nodeId;
 
-    if (!topic || !difficulty || !nodeId) {
+    if (!topic || !nodeId) {
       return;
     }
 
@@ -26,9 +25,10 @@ export function initDashboardViewManager() {
     const context = {
       technology: gameState.currentTechnology,
       topic,
-      difficulty,
+      difficulty: interviewButton.dataset.difficulty || "basic",
       nodeId: Number(nodeId),
-      levelId: mapDifficultyToLevelId(difficulty, loggedInUser?.id_level),
+      // El nivel de la entrevista debe salir del perfil real del usuario, no del nodo visual.
+      levelId: Number(loggedInUser?.id_level || 1),
       // Usa el idioma seleccionado para la entrevista si el usuario ya cambio esa preferencia.
       languageId: getInterviewLanguagePreference(loggedInUser),
       totalQuestions: 5,
@@ -140,17 +140,4 @@ function buildTopics(nodeData) {
 
 function capitalize(text) {
   return text.charAt(0).toUpperCase() + text.slice(1);
-}
-
-function mapDifficultyToLevelId(difficulty, fallbackLevel) {
-  switch (difficulty) {
-    case "advanced":
-      return 3;
-    case "intermediate":
-      return 2;
-    case "basic":
-      return 1;
-    default:
-      return Number(fallbackLevel || 1);
-  }
 }

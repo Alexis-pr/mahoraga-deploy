@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "nodemon src/server.js",
     "start": "node src/server.js",
-    "check:db": "node src/scripts/checkDb.js"
+    "check:db": "node src/scripts/checkDb.js",
+    "seed:interview": "node src/scripts/seedInterviewQuestions.js"
   },
   "repository": {
     "type": "git",

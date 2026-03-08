@@ -1,6 +1,6 @@
 import {
-  evaluateInterviewAnswer,
   clearInterviewSession,
+  evaluateInterviewSession,
   fetchInterviewQuestions,
   getInterviewContext,
   getInterviewSession,
@@ -136,7 +136,7 @@ function bindInterviewActions(session, context) {
   const nextButton = document.getElementById("nextQuestion");
   const answerInput = document.getElementById("answerInput");
 
-  submitButton?.addEventListener("click", async () => {
+  submitButton?.addEventListener("click", () => {
     const answer = answerInput.value.trim();
 
     if (!answer) {
@@ -145,21 +145,13 @@ function bindInterviewActions(session, context) {
     }
 
     const currentQuestion = session.questions[session.currentIndex];
-    const evaluation = await evaluateInterviewAnswer({
-      question: currentQuestion,
-      answer,
-      context,
-    });
-
     session.answers[session.currentIndex] = {
       questionId: currentQuestion.id_question,
       answer,
-      evaluation,
     };
 
-    session.totalScore = calculateAverageScore(session.answers);
     saveInterviewSession(session);
-    renderFeedback(evaluation);
+    renderPendingReview(session);
 
     submitButton.hidden = true;
     nextButton.hidden = false;
@@ -184,7 +176,7 @@ function bindInterviewActions(session, context) {
 
 function renderCurrentQuestion(session, context) {
   if (session.answers.filter(Boolean).length === session.questions.length) {
-    renderInterviewSummary(session);
+    renderInterviewSummary(session, context);
     return;
   }
 
@@ -204,9 +196,11 @@ function renderCurrentQuestion(session, context) {
   answerInput.disabled = Boolean(existingAnswer);
   submitButton.hidden = Boolean(existingAnswer);
   nextButton.hidden = !existingAnswer;
+  nextButton.querySelector("span").textContent =
+    session.currentIndex === session.questions.length - 1 ? "Finalizar entrevista" : "Siguiente pregunta";
 
   if (existingAnswer) {
-    renderFeedback(existingAnswer.evaluation);
+    renderPendingReview(session);
   } else {
     resetFeedback();
   }
@@ -224,18 +218,35 @@ function resetFeedback() {
   document.getElementById("feedbackScore").textContent = "0";
   document.getElementById("feedbackLevel").textContent = "Sin evaluar";
   document.getElementById("feedbackText").textContent =
-    "Responde la pregunta actual para generar retroalimentacion y estimar el nivel.";
+    "Las respuestas se acumulan en la sesion y el feedback general se genera al finalizar la entrevista.";
 }
 
-function renderInterviewSummary(session) {
+function renderPendingReview(session) {
+  document.getElementById("feedbackBadge").textContent = "Saved";
+  document.getElementById("feedbackScore").textContent = String(session.answers.filter(Boolean).length);
+  document.getElementById("feedbackLevel").textContent = "En espera";
+  document.getElementById("feedbackText").textContent =
+    "La respuesta actual ya se guardo en el array de sesion. El puntaje general se calculara al enviar toda la entrevista.";
+}
+
+async function renderInterviewSummary(session, context) {
+  const summary = await evaluateInterviewSession({
+    questions: session.questions,
+    answers: session.answers,
+    context,
+  });
+
+  session.totalScore = summary.score;
+  session.summary = summary;
+  saveInterviewSession(session);
+
   document.getElementById("questionText").textContent = "Interview completed";
   document.getElementById("questionLevel").textContent = "summary";
-  document.getElementById("questionPoints").textContent = `${session.totalScore} avg`;
+  document.getElementById("questionPoints").textContent = `${summary.score} avg`;
   document.getElementById("feedbackBadge").textContent = "Completed";
-  document.getElementById("feedbackScore").textContent = String(session.totalScore);
-  document.getElementById("feedbackLevel").textContent = getGlobalLevel(session.totalScore);
-  document.getElementById("feedbackText").textContent =
-    "La sesion quedo guardada en sessionStorage. El siguiente paso natural es reemplazar la evaluacion local por un endpoint con IA.";
+  document.getElementById("feedbackScore").textContent = String(summary.score);
+  document.getElementById("feedbackLevel").textContent = summary.estimatedLevel;
+  document.getElementById("feedbackText").textContent = summary.feedback;
   document.getElementById("answerInput").disabled = true;
   document.getElementById("submitAnswer").hidden = true;
   document.getElementById("nextQuestion").hidden = true;
@@ -247,17 +258,6 @@ function renderFatalState(message) {
     "No fue posible iniciar la entrevista con la informacion disponible.";
   document.getElementById("submitAnswer").disabled = true;
   document.getElementById("answerInput").disabled = true;
-}
-
-function calculateAverageScore(answers) {
-  const validAnswers = answers.filter(Boolean);
-
-  if (!validAnswers.length) {
-    return 0;
-  }
-
-  const total = validAnswers.reduce((accumulator, answer) => accumulator + answer.evaluation.score, 0);
-  return Math.round(total / validAnswers.length);
 }
 
 function getGlobalLevel(score) {

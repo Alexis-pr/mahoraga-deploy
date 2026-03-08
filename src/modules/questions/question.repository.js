@@ -124,10 +124,22 @@ export const getInterviewQuestions = async ({
     limit = 5
 }) => {
     try {
-        let response = await queryInterviewQuestions(id_level, id_language)
+        const topicIds = await resolveTopicIds(technology)
 
-        if (!response.rows.length && id_language !== null) {
-            response = await queryInterviewQuestions(id_level, null)
+        // Mantiene fijo el nivel del usuario y solo abre el idioma si hace falta.
+        const fallbackChain = [
+            [id_level, id_language],
+            [id_level, null]
+        ]
+
+        let response = { rows: [] }
+
+        for (const [currentLevel, currentLanguage] of fallbackChain) {
+            response = await queryInterviewQuestions(currentLevel, currentLanguage, topicIds)
+
+            if (response.rows.length) {
+                break
+            }
         }
 
         const rankedQuestions = rankInterviewQuestions(
@@ -135,14 +147,14 @@ export const getInterviewQuestions = async ({
             buildInterviewKeywords(technology, topic)
         )
 
-        return rankedQuestions.slice(0, Math.max(1, limit))
+        return shuffleQuestions(rankedQuestions).slice(0, Math.max(1, limit))
     } catch (error) {
         console.error('Error: could not access interview questions', error)
         throw error
     }
 }
 
-async function queryInterviewQuestions(id_level, id_language) {
+async function queryInterviewQuestions(id_level, id_language, topicIds = []) {
     return pool.query(
         `
         SELECT
@@ -155,10 +167,37 @@ async function queryInterviewQuestions(id_level, id_language) {
         LEFT JOIN question_translation qt ON qt.id_question = q.id_question
         WHERE ($1::int IS NULL OR q.id_level = $1)
           AND ($2::int IS NULL OR qt.id_language = $2)
+          AND (cardinality($3::int[]) = 0 OR q.id_topic = ANY($3::int[]))
           AND qt.question_text IS NOT NULL
         `,
-        [id_level, id_language]
+        [id_level, id_language, topicIds]
     )
+}
+
+async function resolveTopicIds(technology) {
+    const normalizedTechnology = technology.trim().toLowerCase()
+
+    if (!normalizedTechnology) {
+        return []
+    }
+
+    const topicMatchers = {
+        python: ['python'],
+        html: ['html'],
+        css: ['css'],
+        javascript: ['javascript', 'javascrip', 'js'],
+        sql: ['data base', 'database', 'sql']
+    }
+
+    const targetMatchers = topicMatchers[normalizedTechnology] || [normalizedTechnology]
+    const response = await pool.query('SELECT id_topic, topic FROM topic')
+
+    return response.rows
+        .filter(({ topic }) => {
+            const normalizedTopic = String(topic).trim().toLowerCase()
+            return targetMatchers.some((matcher) => normalizedTopic.includes(matcher))
+        })
+        .map(({ id_topic }) => id_topic)
 }
 
 function buildInterviewKeywords(technology, topic) {
@@ -185,6 +224,10 @@ function rankInterviewQuestions(rows, keywords) {
             return Math.random() - 0.5
         })
         .map(({ _score, ...question }) => question)
+}
+
+function shuffleQuestions(rows) {
+    return [...rows].sort(() => Math.random() - 0.5)
 }
 
 function dedupeQuestions(rows) {

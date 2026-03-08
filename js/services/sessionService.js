@@ -36,8 +36,9 @@ export function getInterviewLanguagePreference(user) {
 // Expone las opciones visibles para el selector del interview.
 export function getInterviewLanguageOptions() {
   return [
-    { id: 1, label: "English" },
-    { id: 2, label: "Spanish" },
+    // La DB actual usa 1 para espanol y 2 para ingles.
+    { id: 1, label: "Spanish" },
+    { id: 2, label: "English" },
   ];
 }
 
@@ -74,9 +75,9 @@ export function getLevelName(idLevel) {
 export function getLanguageName(idLanguage) {
   switch (Number(idLanguage)) {
     case 1:
-      return "English";
-    case 2:
       return "Spanish";
+    case 2:
+      return "English";
     default:
       return "General";
   }

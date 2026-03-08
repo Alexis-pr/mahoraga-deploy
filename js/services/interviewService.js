@@ -50,28 +50,49 @@ export async function fetchInterviewQuestions(context) {
   return questions;
 }
 
-export async function evaluateInterviewAnswer({ question, answer, context }) {
-  const expectedTerms = buildExpectedTerms(question, context);
-  const normalizedAnswer = answer.toLowerCase();
-  const matchedTerms = expectedTerms.filter((term) => normalizedAnswer.includes(term));
-  const baseScore = Math.min(100, Math.max(20, answer.trim().length / 4));
-  const score = Math.min(100, Math.round(baseScore + matchedTerms.length * 8));
+export async function evaluateInterviewSession({ questions, answers, context }) {
+  const validAnswers = answers.filter(Boolean);
+  const answerScores = validAnswers.map((answerEntry) => {
+    const relatedQuestion = questions.find((question) => question.id_question === answerEntry.questionId);
+    const expectedTerms = buildExpectedTerms(relatedQuestion, context);
+    const normalizedAnswer = answerEntry.answer.toLowerCase();
+    const matchedTerms = expectedTerms.filter((term) => normalizedAnswer.includes(term));
+    const baseScore = Math.min(100, Math.max(20, answerEntry.answer.trim().length / 4));
+
+    return {
+      score: Math.min(100, Math.round(baseScore + matchedTerms.length * 8)),
+      matchedTerms,
+      expectedTerms,
+    };
+  });
+
+  const score = calculateAverageScore(answerScores.map((entry) => entry.score));
   const estimatedLevel = getEstimatedLevel(score);
+  const weakestAnswer = answerScores.sort((left, right) => left.score - right.score)[0];
 
   return {
     score,
     estimatedLevel,
-    feedback: buildFeedback(score, matchedTerms, expectedTerms),
+    feedback: buildFeedback(score, weakestAnswer?.matchedTerms || [], weakestAnswer?.expectedTerms || []),
   };
 }
 
 function buildExpectedTerms(question, context) {
-  return `${context.technology} ${context.topic} ${question.question_text}`
+  return `${context.technology} ${context.topic} ${question?.question_text || ""}`
     .toLowerCase()
     .split(/[^a-z0-9áéíóúñ+#.]+/i)
     .map((term) => term.trim())
     .filter((term) => term.length > 3)
     .slice(0, 10);
+}
+
+function calculateAverageScore(scores) {
+  if (!scores.length) {
+    return 0;
+  }
+
+  const total = scores.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+  return Math.round(total / scores.length);
 }
 
 function getEstimatedLevel(score) {
