@@ -1,83 +1,74 @@
-/* CONTENEDOR SCROLL */
-
 .roadmap-container {
-    width: 100%;
-    height: 600px;
-    overflow: hidden;
-    cursor: grab;
-    position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  cursor: grab;
+  position: relative;
 }
 
-.road-container:active {
-    cursor: grabbing;
+.roadmap-container.active {
+  cursor: grabbing;
 }
-
-/* MUNDO */
 
 .roadmap-world {
-    width: 2000px;
-    height: 100%;
-    position: relative;
+  width: 3200px;
+  height: 100%;
+  position: relative;
 }
-
-/* NODOS */
 
 .node {
-    position: absolute;
-    width: 90px;
-    height: 90px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    font-size: 14px;
-    font-weight: 600;
-    text-align: center;
-
-    cursor: pointer;
-    transition: all 0.25s ease;
-    
+  position: absolute;
+  width: 90px;
+  height: 90px;
+  border: 2px solid transparent;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  text-align: center;
+  line-height: 1.15;
+  cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  color: #ffffff;
+  appearance: none;
 }
 
-.node-layer {
-    position: relative;
-    height: 100%;
+.nodes-layer {
+  position: relative;
+  height: 100%;
 }
-
-.nodes.layer {
-    position: relative;
-}
-
-/* CONECCIONES */
 
 .connections {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    pointer-events: none;
-    
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  pointer-events: none;
 }
 
-/* ESTADOS */
-
 .node.locked {
-    background: #2a2a2a;
-    opacity: 0.8;
-    cursor: not-allowed;
+  background: var(--node-locked, #2a2a2a);
+  opacity: 0.8;
+  cursor: not-allowed;
 }
 
 .node.available {
-    background: #1e5fa8;
-    box-shadow: 0 0 15px rgba(30, 95, 168, 0.5);
+  background: var(--node-available, #1e5fa8);
+  box-shadow: 0 0 15px rgba(30, 95, 168, 0.35);
 }
 
 .node.completed {
-    background: #2ecc71;
-    box-shadow: 0 0 20px rgba(46, 204, 113, 0.6);
+  background: var(--node-completed, #2ecc71);
+  box-shadow: 0 0 20px rgba(46, 204, 113, 0.35);
 }
 
 .node:hover:not(.locked) {
-    transform: scale(1.1);
+  transform: scale(1.08);
+}
+
+.node:active:not(.locked) {
+  transform: scale(0.96);
 }

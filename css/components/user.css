@@ -1,70 +1,64 @@
 .user-section {
-    display: flex;
-    background-color: #1e1e1e;
-    align-items: center;
-    gap: 12px;
-
-    padding: 12px;
-    border-radius: 14px;
-    border: 1px solid rgba(255, 255, 255, 0.186);
-
-    cursor: pointer;
-    transition: all 0.3s ease;
-    color: white;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  display: flex;
+  background-color: var(--bg-secondary);
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  border-radius: 14px;
+  border: 1px solid var(--border-color);
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+  color: var(--text-primary);
+  box-shadow: 0 4px 12px var(--shadow-color);
 }
 
 .user-section:hover {
-    background: #2a2a2a;
-     transform: translateX(6px) scale(1.02);
+  background: var(--bg-tertiary);
+  transform: translateX(6px) scale(1.02);
 }
-
-/* IMAGEN */
 
 .user-avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: all 0.3s ease;
-    border: 1px solid rgba(255, 255, 255, 0.262);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.2s ease, filter 0.2s ease;
+  border: 1px solid var(--border-color);
+  background-size: cover;
+  background-position: center;
+  background-color: var(--bg-primary);
 }
 
-.user-avatar:hover{
-    background-color: rgb(65, 65, 65);
+.user-avatar:hover {
+  background-color: var(--bg-secondary);
+}
+
+.user-avatar.has-image:hover {
+  filter: brightness(0.86);
 }
 
 .user-avatar i {
-    font-size: 1.2rem;
+  font-size: 1.2rem;
 }
-
-/* LOGOS */
 
 .logo {
-    width: 65px;
+  width: 65px;
 }
 
-.logo-python {
-    width: 40px;
-}
-
-.logo-html {
-    width: 40px;
-}
-
+.logo-python,
+.logo-html,
 .logo-css {
-    width: 40px;
+  width: 40px;
 }
 
 .logo-javascript {
-    width: 40px;
-    border-radius: 8px;
+  width: 40px;
+  border-radius: 8px;
 }
 
 .logo-sql {
-    width: 50px;
+  width: 50px;
 }
-
