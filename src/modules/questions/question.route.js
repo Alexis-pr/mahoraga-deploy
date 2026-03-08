@@ -1,9 +1,10 @@
 import { Router } from 'express'
-import { createQuestionRequest, getQuestions } from './question.controller.js'
+import { createQuestionRequest, getQuestions, getQuestionByLevel } from './question.controller.js'
 
-const router = Router()
+const routerQuestion = Router()
 
-router.post('/', createQuestionRequest)
-router.get('/', getQuestions)
+routerQuestion.post('/', createQuestionRequest)
+routerQuestion.get('/', getQuestions)
+routerQuestion.get('/level/:id_level', getQuestionByLevel)
 
-export default router
+export default routerQuestion
