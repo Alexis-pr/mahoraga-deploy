@@ -60,7 +60,6 @@ export const updateQuestion = async (id_question, id_topic, id_level, translatio
             `,
             [id_topic, id_level, id_question]
         )
-
         await client.query(
             `
             DELETE FROM question_translation
@@ -80,7 +79,6 @@ export const updateQuestion = async (id_question, id_topic, id_level, translatio
                 )
             }
         }
-
         await client.query('COMMIT')
         return { id_question }
     } catch (error) {
@@ -92,10 +90,10 @@ export const updateQuestion = async (id_question, id_topic, id_level, translatio
     }
 }
 
-export const getQuestionByLevel = async (id_level) => {
+export const getQuestionByLevel = async (id_level, id_topic, id_language) => {
     try {
-        const res = await pool.query(
-            `
+        const params = [id_level]
+        let query = `
             SELECT
                 q.id_question,
                 q.id_topic,
@@ -105,10 +103,22 @@ export const getQuestionByLevel = async (id_level) => {
             FROM question q
             LEFT JOIN question_translation qt ON qt.id_question = q.id_question
             WHERE q.id_level = $1
-            ORDER BY q.id_question, qt.id_language
-            `,
-            [id_level]
-        )
+        `
+        if (id_topic) {
+            params.push(id_topic)
+            query += ` AND q.id_topic = $${params.length}`
+        }
+
+        if (id_language) {
+            params.push(id_language)
+            query += ` AND qt.id_language = $${params.length}`
+        }
+
+        query += `
+            ORDER BY q.id_question, qt.id_language, q.id_topic
+        `
+
+        const res = await pool.query(query, params)
         return res.rows
     } catch (error) {
         console.error(`Error: could not access the questions by level`, error)
