@@ -45,6 +45,7 @@ export function initPhotoProfile() {
 
       localStorage.setItem(STORAGE_KEY, imageBase64);
       syncAvatar(imageBase64, photoContainer, sidebarAvatar, cameraIcon);
+      document.dispatchEvent(new CustomEvent("profile-photo-updated", { detail: { image: imageBase64 } }));
     };
 
     reader.readAsDataURL(file);
@@ -54,6 +55,7 @@ export function initPhotoProfile() {
     event.stopPropagation();
     localStorage.removeItem(STORAGE_KEY);
     syncAvatar("", photoContainer, sidebarAvatar, cameraIcon);
+    document.dispatchEvent(new CustomEvent("profile-photo-updated", { detail: { image: "" } }));
   });
 
   openButton.addEventListener("click", () => {

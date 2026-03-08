@@ -1,9 +1,11 @@
 import { activateTechnology } from "./ui/dashboardRenderer.js";
+import { requireLoggedInUser } from "./services/sessionService.js";
 import { initThemeManager } from "./ui/themeManager.js";
 import { renderRoadmap } from "./ui/roadmapRenderer.js";
 import { initDashboardViewManager, resetDetailPanel } from "./ui/viewManager.js";
 import { gameState } from "./state/gameState.js";
 import { initPhotoProfile } from "./data/profile/modalProfile.js";
+import { initDashboardIdentity } from "./ui/userIdentity.js";
 
 function initRoadmapDrag() {
   const container = document.querySelector(".roadmap-container");
@@ -81,7 +83,14 @@ function initTechnologySelector() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+  const user = requireLoggedInUser("../index.html");
+
+  if (!user) {
+    return;
+  }
+
   initRoadmapDrag();
+  initDashboardIdentity();
   initPhotoProfile();
   initDashboardViewManager();
   initThemeManager();

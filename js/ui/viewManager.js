@@ -1,4 +1,6 @@
 import { gameState } from "../state/gameState.js";
+import { clearInterviewSession, saveInterviewContext } from "../services/interviewService.js";
+import { getInterviewLanguagePreference, getLoggedInUser } from "../services/sessionService.js";
 
 const DEFAULT_DETAIL_MESSAGE = "Choose an available node to inspect its content.";
 
@@ -13,12 +15,28 @@ export function initDashboardViewManager() {
 
   interviewButton?.addEventListener("click", () => {
     const topic = interviewButton.dataset.topic;
+    const difficulty = interviewButton.dataset.difficulty;
+    const nodeId = interviewButton.dataset.nodeId;
 
-    if (!topic) {
+    if (!topic || !difficulty || !nodeId) {
       return;
     }
 
-    console.log(`Interview pending for topic: ${topic}`);
+    const loggedInUser = getLoggedInUser();
+    const context = {
+      technology: gameState.currentTechnology,
+      topic,
+      difficulty,
+      nodeId: Number(nodeId),
+      levelId: mapDifficultyToLevelId(difficulty, loggedInUser?.id_level),
+      // Usa el idioma seleccionado para la entrevista si el usuario ya cambio esa preferencia.
+      languageId: getInterviewLanguagePreference(loggedInUser),
+      totalQuestions: 5,
+    };
+
+    clearInterviewSession();
+    saveInterviewContext(context);
+    window.location.href = "../pages/interview.html";
   });
 
   resetDetailPanel();
@@ -37,6 +55,8 @@ export function openDetailPanel(nodeData, currentMap) {
   title.textContent = nodeData.title;
   topicsList.innerHTML = buildTopics(nodeData).map((topic) => `<li>${topic}</li>`).join("");
   interviewButton.dataset.topic = nodeData.title;
+  interviewButton.dataset.difficulty = nodeData.difficulty;
+  interviewButton.dataset.nodeId = String(nodeData.id);
   interviewButton.disabled = false;
   detailPanel.classList.add("active");
 
@@ -61,6 +81,8 @@ export function resetDetailPanel() {
   if (interviewButton) {
     interviewButton.disabled = true;
     interviewButton.dataset.topic = "";
+    interviewButton.dataset.difficulty = "";
+    interviewButton.dataset.nodeId = "";
   }
 
   detailPanel?.classList.remove("active");
@@ -118,4 +140,17 @@ function buildTopics(nodeData) {
 
 function capitalize(text) {
   return text.charAt(0).toUpperCase() + text.slice(1);
+}
+
+function mapDifficultyToLevelId(difficulty, fallbackLevel) {
+  switch (difficulty) {
+    case "advanced":
+      return 3;
+    case "intermediate":
+      return 2;
+    case "basic":
+      return 1;
+    default:
+      return Number(fallbackLevel || 1);
+  }
 }

@@ -1,3 +1,5 @@
+import { clearInterviewSession } from "../services/interviewService.js";
+
 const THEME_STORAGE_KEY = "dashboardTheme";
 
 export function initThemeManager() {
@@ -6,6 +8,7 @@ export function initThemeManager() {
   const closeButton = document.querySelector(".settings-close");
   const themeButtons = document.querySelectorAll(".theme-btn");
   const logoutButton = document.querySelector(".logout-btn");
+  const sidebarLogoutButton = document.getElementById("sidebarLogout");
 
   if (!overlay || !openButton || !closeButton || !themeButtons.length) {
     return;
@@ -38,9 +41,8 @@ export function initThemeManager() {
     });
   });
 
-  logoutButton?.addEventListener("click", () => {
-    window.location.href = "../index.html";
-  });
+  logoutButton?.addEventListener("click", handleLogout);
+  sidebarLogoutButton?.addEventListener("click", handleLogout);
 }
 
 function applyTheme(theme, themeButtons) {
@@ -57,4 +59,10 @@ function applyTheme(theme, themeButtons) {
 function closeSettings(overlay) {
   overlay.classList.remove("active");
   document.body.style.overflow = "";
+}
+
+function handleLogout() {
+  clearInterviewSession();
+  sessionStorage.removeItem("loggedInUser");
+  window.location.href = "../index.html";
 }

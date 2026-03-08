@@ -31,11 +31,21 @@
                 </div>
 
                 <div class="user-info">
-                    <p class="username">Name User</p>
-                    <div class="levels">
+                    <p class="username" id="dashboardUsername">Name User</p>
+                    <div class="levels" id="dashboardBadges">
                     </div>
                 </div>
             </button>
+
+            <section class="identity-banner">
+                <p class="identity-kicker">Logged In</p>
+                <h2 class="identity-name" id="identityName">Name User</h2>
+                <p class="identity-copy" id="identityCopy">Continue your roadmap and interview flow without losing progress.</p>
+                <div class="identity-tags">
+                    <span class="identity-tag" id="identityLevel">Level</span>
+                    <span class="identity-tag" id="identityLanguage">Language</span>
+                </div>
+            </section>
 
 
             <div class="technologies">
@@ -69,6 +79,11 @@
                     <span class="percent">0%</span>
                 </button>
             </div>
+
+            <button class="sidebar-logout" type="button" id="sidebarLogout">
+                <i class="bi bi-box-arrow-left"></i>
+                <span>Logout</span>
+            </button>
 
             <button title="Settings" class="sidebar-settings" type="button" aria-label="Open settings">
                 <i class="bi bi-gear-fill"></i>
@@ -161,7 +176,7 @@
                         </div>
                     </div>
                 </div>
-                <h2>Name user</h2>
+                <h2 id="profileUsername">Name user</h2>
             </article>
 
             <input type="file" id="photoInput" accept="image/*" hidden>
@@ -178,8 +193,8 @@
             <div class="total-process cardProfile">
                 <h3>Total process</h3>
                 <div class="process-load">
-                    <div class="load">
-                        <p>20%</p>
+                    <div class="load" id="profileProgressFill">
+                        <p id="profileProgressLabel">20%</p>
                     </div>
 
                 </div>
@@ -209,7 +224,7 @@
                     <img src="../assets/colorful-bright-confetti-png.png" alt="">
 
                 </div>
-                <p>You have a <br> <span>Mid developer</span><br>level</p>
+                <p>You have a <br> <span id="profileLevel">Mid developer</span><br>level</p>
 
             </div>
 
