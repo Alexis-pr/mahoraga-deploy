@@ -48,13 +48,14 @@ export const createQuestionRequest = async (req, res) => {
 
 export const getQuestionByLevel = async (req, res) => {
     const { id_level } = req.params
+    const { topic: id_topic, id_language } = req.query
 
     if (!id_level) {
         return res.status(400).json({ error: 'Debes indicar id_level en la ruta.' })
     }
 
     try {
-        const data = await getQuestionByLevelService(id_level)
+        const data = await getQuestionByLevelService(id_level, id_topic, id_language)
         res.json(data)
     } catch (error) {
         console.error('Error al obtener preguntas por nivel:', error)

@@ -12,5 +12,6 @@ export const createQuestion = async (payload) => createQuestionRepo(payload)
 export const updateQuestion = async (id_question, id_topic, id_level, translations) => {
   return updateQuestionRepo(id_question, id_topic, id_level, translations)}
 
-export const getQuestionByLevel = async (id_level) => getQuestionByLevelRepo(id_level)
+export const getQuestionByLevel = async (id_level, id_topic, id_language) =>
+  getQuestionByLevelRepo(id_level, id_topic, id_language)
 
