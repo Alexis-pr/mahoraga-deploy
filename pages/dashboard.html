@@ -3,10 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>Mahoraga Dashboard</title>
+    <link rel="icon" type="image/png" href="../img/logo.png">
 
     <!-- CSS -->
-     <link rel="stylesheet" href="../css/components/user.css">
+    <link rel="stylesheet" href="../css/components/user.css">
     <link rel="stylesheet" href="../css/base/reset.css">
+    <link rel="stylesheet" href="../css/features/theme.css">
     <link rel="stylesheet" href="../css/layout/dashboard.css">
     <link rel="stylesheet" href="../css/components/buttons.css">
     <link rel="stylesheet" href="../css/features/roadmap.css">
@@ -24,16 +26,26 @@
 
             <button title="Profile" class="user-section">
 
-                <div class="user-avatar">
+                <div class="user-avatar" id="sidebarAvatar">
                     <i class="bi bi-camera"></i>
                 </div>
 
                 <div class="user-info">
-                    <p class="username">Name User</p>
-                    <div class="levels">
+                    <p class="username" id="dashboardUsername">Name User</p>
+                    <div class="levels" id="dashboardBadges">
                     </div>
                 </div>
             </button>
+
+            <section class="identity-banner">
+                <p class="identity-kicker">Logged In</p>
+                <h2 class="identity-name" id="identityName">Name User</h2>
+                <p class="identity-copy" id="identityCopy">Continue your roadmap and interview flow without losing progress.</p>
+                <div class="identity-tags">
+                    <span class="identity-tag" id="identityLevel">Level</span>
+                    <span class="identity-tag" id="identityLanguage">Language</span>
+                </div>
+            </section>
 
 
             <div class="technologies">
@@ -68,6 +80,15 @@
                 </button>
             </div>
 
+            <button class="sidebar-logout" type="button" id="sidebarLogout">
+                <i class="bi bi-box-arrow-left"></i>
+                <span>Logout</span>
+            </button>
+
+            <button title="Settings" class="sidebar-settings" type="button" aria-label="Open settings">
+                <i class="bi bi-gear-fill"></i>
+            </button>
+
         </aside>
     <!-- ============== FIN SIDEBAR ================= -->
 
@@ -101,23 +122,35 @@
         <div class="detail-card">
 
             <div class="detail-header">
-                <h2 class="detail-title">CSS GRID</h2>
-                <button class="close-panel">✕</button>
+                <h2 class="detail-title">Select a topic</h2>
+                <button class="close-panel" type="button" aria-label="Close detail panel">
+                    <i class="bi bi-x-lg"></i>
+                </button>
             </div>
 
-            <div class="topics-section">
-                <h4>Topics</h4>
-                <ul class="topics-list">
-                    <li>Grid container and grid items</li>
-                    <li>Grid-template-columns / rows</li>
-                    <li>Grid-gap and gap</li>
-                    <li>Grid areas and template areas</li>
-                    <li>Implicit vs explicit grid</li>
-                </ul>
+            <div class="detail-container">
+                <div class="technology-progress-section">
+                    <div class="technology-progress-meta">
+                        <h4>Technology Progress</h4>
+                        <span class="technology-progress-percent">0%</span>
+                    </div>
+                    <div class="technology-progress-track">
+                        <div class="technology-progress-fill"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="detail-container">
+                <div class="topics-section">
+                    <h4>Topics</h4>
+                    <ul class="topics-list">
+                        <li>Choose an available node to inspect its content.</li>
+                    </ul>
+                </div>
             </div>
 
             <div class="detail-footer">
-                <button class="interview-btn">
+                <button class="interview-btn" type="button">
                     Interview →
                 </button>
             </div>
@@ -143,15 +176,10 @@
                         </div>
                     </div>
                 </div>
-                <h2>Name user</h2>
+                <h2 id="profileUsername">Name user</h2>
             </article>
 
             <input type="file" id="photoInput" accept="image/*" hidden>
-
-
-            <input type="file" id="photoInput" accept="image/*" hidden>
-
-
 
             <article class="exit-profile">
                 <div class="exitLogo">
@@ -165,8 +193,8 @@
             <div class="total-process cardProfile">
                 <h3>Total process</h3>
                 <div class="process-load">
-                    <div class="load">
-                        <p>20%</p>
+                    <div class="load" id="profileProgressFill">
+                        <p id="profileProgressLabel">20%</p>
                     </div>
 
                 </div>
@@ -196,7 +224,7 @@
                     <img src="../assets/colorful-bright-confetti-png.png" alt="">
 
                 </div>
-                <p>You have a <br> <span>Mid developer</span><br>level</p>
+                <p>You have a <br> <span id="profileLevel">Mid developer</span><br>level</p>
 
             </div>
 
@@ -231,6 +259,42 @@
 
             </div>
         </section>
+    </div>
+
+    <div class="settings-modal-overlay" id="settingsOverlay">
+        <div class="settings-modal" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
+            <div class="settings-header">
+                <h2 id="settingsTitle">Settings</h2>
+                <button class="settings-close" type="button" aria-label="Close settings">
+                    <i class="bi bi-x-lg"></i>
+                </button>
+            </div>
+
+            <div class="settings-content">
+                <div class="settings-section">
+                    <h3>Theme</h3>
+                    <div class="theme-buttons">
+                        <button class="theme-btn dark-theme active" type="button" data-theme="dark">
+                            <i class="bi bi-moon-stars-fill"></i>
+                            <span>Dark</span>
+                        </button>
+                        <button class="theme-btn light-theme" type="button" data-theme="light">
+                            <i class="bi bi-sun-fill"></i>
+                            <span>Light</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="settings-divider"></div>
+
+                <div class="settings-section">
+                    <button class="logout-btn" type="button">
+                        <i class="bi bi-box-arrow-right"></i>
+                        <span>Logout</span>
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
 <!-- JS -->
 <script type="module" src="../js/mainDashboard.js"></script>

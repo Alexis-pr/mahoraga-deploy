@@ -34,8 +34,11 @@ export const loginUserQuery = async (l_login, l_password)=>{
     const query = `
     SELECT id_user, user_name, email, user_status, id_language, id_level
     FROM "user"
-    WHERE (email = $1 OR user_name = $1)
-      AND password = crypt($2, password)
+    WHERE (LOWER(email) = LOWER($1) OR LOWER(user_name) = LOWER($1))
+      AND (
+        (password LIKE '$2%' AND password = crypt($2, password))
+        OR (password NOT LIKE '$2%' AND password = $2)
+      )
     LIMIT 1
     `
     const values = [l_login, l_password]

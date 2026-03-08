@@ -1,6 +1,7 @@
 import {
   consultationQuestion,
   createQuestion,
+  getInterviewQuestions as getInterviewQuestionsService,
   getQuestionByLevel as getQuestionByLevelService
 } from './question.service.js'
 
@@ -61,6 +62,33 @@ export const getQuestionByLevel = async (req, res) => {
         console.error('Error al obtener preguntas por nivel:', error)
         res.status(500).json({
             error: 'Error al obtener las preguntas por nivel.'
+        })
+    }
+}
+
+export const getInterviewQuestions = async (req, res) => {
+    const {
+        level,
+        language,
+        technology = '',
+        topic = '',
+        limit = '5'
+    } = req.query
+
+    try {
+        const data = await getInterviewQuestionsService({
+            id_level: level ? Number(level) : null,
+            id_language: language ? Number(language) : null,
+            technology,
+            topic,
+            limit: Number(limit) || 5
+        })
+
+        res.json(data)
+    } catch (error) {
+        console.error('Error al obtener preguntas para interview:', error)
+        res.status(500).json({
+            error: 'Error al obtener preguntas de interview.'
         })
     }
 }

@@ -45,7 +45,8 @@ export const createUsersReq = async (req, res) => {
 }
 
 export const loginUserReq = async (req, res) => {
-    const { login, password } = req.body
+    const login = req.body?.login?.trim()
+    const password = req.body?.password
 
     const missingFields = []
     if (login === undefined || login === null || String(login).trim() === '') missingFields.push('login')

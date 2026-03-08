@@ -1,4 +1,3 @@
-
 export function validateUsername(username) {
     if (!username || username.length < 3) {
         return 'Username must be at least 3 characters long';
@@ -9,6 +8,29 @@ export function validateUsername(username) {
     if (!/^[a-zA-Z0-9_]+$/.test(username)) {
         return 'Username can only contain letters, numbers and underscores';
     }
+    return null;
+}
+
+export function validateLoginIdentifier(identifier) {
+    if (!identifier) {
+        return 'Email o username es requerido';
+    }
+
+    const normalized = identifier.trim();
+
+    // Si tiene @, se valida como email.
+    if (normalized.includes('@')) {
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalized)) {
+            return 'Email invalido';
+        }
+        return null;
+    }
+
+    // Si no tiene @, se valida como username.
+    if (!/^[a-zA-Z0-9_]{3,20}$/.test(normalized)) {
+        return 'Username invalido (3-20, letras, numeros y _)';
+    }
+
     return null;
 }
 
