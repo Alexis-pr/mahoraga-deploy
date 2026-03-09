@@ -1,0 +1,15 @@
+
+@import 'variables.css';
+@import 'base.css';
+
+
+@import 'header.css';
+@import 'hero.css';
+@import 'cards.css';
+@import 'about.css';
+@import 'footer.css';
+@import 'modal.css';
+
+
+@import 'animations.css';
+@import 'responsive.css';

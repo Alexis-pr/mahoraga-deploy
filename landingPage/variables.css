@@ -1,0 +1,43 @@
+/* ========================================
+   VARIABLES CSS
+   ======================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
+
+:root {
+    /* Backgrounds */
+    --background-body: linear-gradient(to bottom,
+        #000000 20%,
+        #000000 100%);
+
+    --bg-dark-primary: rgb(0, 0, 0);
+    --bg-dark-secondary: rgb(29, 29, 29);
+    --bg-card-gradient: linear-gradient(-10deg, black, rgb(84, 84, 84));
+    --bg-title: rgba(139, 139, 139, 0.362);
+    --bg-signup: rgba(255, 255, 255, 0.014);
+    --bg-signup-hover: rgba(255, 255, 255, 0.151);
+
+    /* Text Colors */
+    --text-color: #ffffff;
+    --text-muted: rgba(255, 255, 255, 0.568);
+    --color-line: rgba(255, 255, 255, 0.155);
+
+    /* Borders */
+    --border-light: rgba(255, 255, 255, 0.69);
+    --border-signup: rgba(255, 255, 255, 0.39);
+    --border-white: #ffffff;
+
+    /* Shadows */
+    --shadow-soft: 0 10px 12px rgba(0, 0, 0, 0.382);
+    --shadow-glow-strong: 0 0 150px rgba(255, 255, 255, 0.378);
+    --shadow-glow-medium: 0 0 60px rgba(255, 255, 255, 0.231);
+
+    /* Text Effects */
+    --text-glow:
+        0 0 0px #fff,
+        0 0 0px #fff,
+        0 0 0px #ffffff,
+        0 0 0px #ffffff,
+        0 0 0px #ffffff,
+        0 0 30px #ffffff;
+}

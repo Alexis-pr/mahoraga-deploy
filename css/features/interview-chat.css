@@ -1,0 +1,369 @@
+@import url("https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Ubuntu:wght@400;500;700&display=swap");
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top, rgba(0, 255, 170, 0.08), transparent 24%),
+    linear-gradient(180deg, #05080f 0%, #04060c 100%);
+  color: var(--text-primary);
+  font-family: "Ubuntu", sans-serif;
+}
+
+.interview-shell {
+  min-height: 100vh;
+  padding: 16px 20px 40px;
+}
+
+.interview-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  color: var(--text-secondary);
+  font-family: "Share Tech Mono", monospace;
+}
+
+.back-link {
+  border: none;
+  background: transparent;
+  color: inherit;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font: inherit;
+  cursor: pointer;
+}
+
+.interview-topic {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.interview-user {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 12px;
+  border: 1px solid rgba(0, 255, 170, 0.16);
+  border-radius: 999px;
+  background: rgba(5, 12, 24, 0.82);
+}
+
+.interview-language-picker {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  border: 1px solid rgba(0, 255, 170, 0.16);
+  border-radius: 999px;
+  background: rgba(5, 12, 24, 0.82);
+  color: #8ea1c0;
+}
+
+.interview-language-picker span {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.interview-language-picker select {
+  border: none;
+  background: transparent;
+  color: #ffffff;
+  font: inherit;
+  outline: none;
+  cursor: pointer;
+}
+
+.interview-language-picker option {
+  color: #ffffff;
+  background: #08101b;
+}
+
+.interview-user-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 255, 170, 0.2);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #e5fdf6;
+  font-weight: 700;
+  background-size: cover;
+  background-position: center;
+  background-color: rgba(0, 255, 170, 0.08);
+}
+
+.interview-user-copy p,
+.interview-user-copy span {
+  margin: 0;
+  display: block;
+}
+
+.interview-user-copy p {
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.interview-user-copy span {
+  color: #8ea1c0;
+  font-size: 0.78rem;
+}
+
+.interview-topic-icon {
+  width: 38px;
+  height: 38px;
+  border: 1px solid rgba(0, 255, 170, 0.25);
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #a1ff6a;
+  font-size: 0.8rem;
+}
+
+.interview-technology,
+.interview-module {
+  margin: 0;
+}
+
+.interview-technology {
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.interview-progress {
+  width: 100%;
+  height: 4px;
+  margin-top: 14px;
+  background: rgba(60, 72, 97, 0.4);
+  overflow: hidden;
+}
+
+.interview-progress-bar {
+  width: 0;
+  height: 100%;
+  background: linear-gradient(90deg, #00e6a2, #00ff80);
+  transition: width 0.3s ease;
+}
+
+.interview-grid {
+  position: relative;
+  min-height: calc(100vh - 80px);
+  display: grid;
+  place-items: center;
+  padding: 48px 20px 20px;
+}
+
+.grid-overlay {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(0, 255, 170, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 255, 170, 0.08) 1px, transparent 1px);
+  background-size: 36px 36px;
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.95), rgba(0, 0, 0, 0.5));
+  pointer-events: none;
+}
+
+.question-card,
+.response-panel,
+.feedback-card {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 760px);
+  background: rgba(4, 9, 17, 0.9);
+  border: 1px solid rgba(0, 255, 170, 0.18);
+  border-radius: 18px;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.35);
+}
+
+.question-card {
+  padding: 22px 24px;
+  margin-bottom: 22px;
+}
+
+.question-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+  font-family: "Share Tech Mono", monospace;
+}
+
+.question-level {
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(0, 255, 170, 0.12);
+  color: #00e6a2;
+  text-transform: lowercase;
+}
+
+.question-points {
+  color: #7889a8;
+}
+
+.question-text {
+  margin: 0;
+  font-size: 2rem;
+  line-height: 1.25;
+}
+
+.response-panel {
+  padding: 0;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+.voice-hint {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 24px;
+  color: #8ea1c0;
+  font-family: "Share Tech Mono", monospace;
+}
+
+.voice-button {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: 2px solid #00e6a2;
+  background: rgba(0, 230, 162, 0.08);
+  color: #00e6a2;
+}
+
+.answer-label {
+  display: inline-block;
+  margin-bottom: 10px;
+  color: #627694;
+  font-family: "Share Tech Mono", monospace;
+}
+
+.answer-input {
+  width: 100%;
+  min-height: 170px;
+  padding: 22px;
+  box-sizing: border-box;
+  resize: vertical;
+  border-radius: 16px;
+  border: 2px solid rgba(0, 255, 170, 0.55);
+  background: rgba(17, 24, 39, 0.88);
+  color: var(--text-primary);
+  font: 1rem/1.6 "Share Tech Mono", monospace;
+  outline: none;
+}
+
+.answer-input::placeholder {
+  color: #7786a0;
+}
+
+.response-actions {
+  display: flex;
+  gap: 14px;
+  margin-top: 20px;
+}
+
+.submit-answer,
+.next-question {
+  border: none;
+  border-radius: 12px;
+  padding: 16px 22px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  font: 700 1rem "Share Tech Mono", monospace;
+  cursor: pointer;
+}
+
+.submit-answer {
+  flex: 1;
+  background: linear-gradient(90deg, #00b66b, #009f5b);
+  color: #03130d;
+}
+
+.next-question {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
+.feedback-card {
+  margin-top: 24px;
+  padding: 20px 24px;
+}
+
+.feedback-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.feedback-header h2,
+.feedback-score,
+.feedback-level,
+.feedback-text {
+  margin: 0;
+}
+
+.feedback-badge {
+  padding: 6px 10px;
+  border-radius: 999px;
+  font: 700 0.8rem "Share Tech Mono", monospace;
+  background: rgba(255, 255, 255, 0.08);
+  color: #9eb0cc;
+}
+
+.feedback-score,
+.feedback-level {
+  margin-top: 12px;
+  color: #b9c7dd;
+}
+
+.feedback-text {
+  margin-top: 14px;
+  color: #d6e0ef;
+  line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+  .interview-shell {
+    padding-inline: 14px;
+  }
+
+  .interview-topbar {
+    flex-wrap: wrap;
+  }
+
+  .interview-user {
+    order: 4;
+    width: 100%;
+    justify-content: space-between;
+    border-radius: 18px;
+  }
+
+  .interview-language-picker {
+    order: 5;
+    width: 100%;
+    justify-content: space-between;
+    border-radius: 18px;
+  }
+
+  .question-text {
+    font-size: 1.4rem;
+  }
+
+  .response-actions {
+    flex-direction: column;
+  }
+
+  .submit-answer,
+  .next-question {
+    width: 100%;
+  }
+}

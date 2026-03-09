@@ -1,0 +1,78 @@
+.technologies {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 30px;
+}
+
+.tech-btn {
+  width: 100%;
+  padding: 16px 18px;
+  border-radius: 12px;
+  border: 2px solid transparent;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.24);
+}
+
+.tech-btn:hover {
+  transform: translateY(-4px) translateX(4px);
+  border-color: rgba(255, 255, 255, 0.18);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.34);
+}
+
+.tech-btn.active {
+  outline: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.python {
+  background: linear-gradient(135deg, rgba(55, 119, 171, 0.3), rgba(44, 90, 160, 0.2));
+  border-color: rgba(55, 119, 171, 0.3);
+}
+
+.html {
+  background: linear-gradient(135deg, rgba(227, 79, 38, 0.3), rgba(212, 58, 26, 0.2));
+  border-color: rgba(227, 79, 38, 0.3);
+}
+
+.css {
+  background: linear-gradient(135deg, rgba(41, 101, 241, 0.3), rgba(30, 78, 203, 0.2));
+  border-color: rgba(41, 101, 241, 0.3);
+}
+
+.javascript {
+  background: linear-gradient(135deg, rgba(247, 222, 30, 0.3), rgba(172, 152, 0, 0.25));
+  border-color: rgba(247, 222, 30, 0.3);
+}
+
+.sql {
+  background: linear-gradient(135deg, rgba(41, 60, 146, 0.3), rgba(30, 42, 107, 0.2));
+  border-color: rgba(41, 60, 146, 0.3);
+}
+
+.tech-btn span:first-of-type {
+  margin-left: 12px;
+  margin-right: auto;
+}
+
+.tech-btn img {
+  object-fit: contain;
+}
+
+.percent {
+  font-size: 13px;
+  opacity: 0.85;
+  font-weight: 700;
+  padding: 4px 10px;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+}

@@ -1,0 +1,49 @@
+
+.slogan {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    margin-top: 5rem;
+    gap: 2rem;
+    transition: transform 0.1s linear, opacity 0.1s linear;
+    will-change: transform, opacity;
+}
+
+.slogan h1 {
+    margin-top: -2rem;
+    font-size: 3rem;
+    text-shadow: var(--text-glow);
+}
+
+.slogan p {
+    color: var(--text-muted);
+}
+
+.interfaz {
+    width: 100%;
+    border-radius: 1rem;
+    display: flex;
+    justify-content: center;
+    margin-top: 3rem;
+    transition: transform 0.1s linear, opacity 0.1s linear;
+    will-change: transform, opacity;
+}
+
+.interfaz img {
+    position: relative;
+    width: 750px;
+    border-radius: 1rem;
+    border: solid 3px var(--border-light);
+    box-shadow: var(--shadow-glow-strong);
+    z-index: 1000;
+}
+
+.shine {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+    z-index: -1;
+    pointer-events: none;
+}

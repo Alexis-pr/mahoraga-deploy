@@ -1,0 +1,66 @@
+
+@media (max-width: 900px) {
+    .auth-wrapper {
+        flex-direction: column;
+        height: auto;
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+
+    .brand-panel,
+    .forms-panel {
+        width: 100%;
+    }
+
+    .brand-panel {
+        padding: 40px;
+        order: 1 !important;
+    }
+
+    .forms-panel {
+        order: 2 !important;
+    }
+
+    .form-section {
+        padding: 40px 30px;
+    }
+
+    .logo-circle {
+        width: 90px;
+        height: 90px;
+    }
+
+    .logo-circle span {
+        font-size: 48px;
+    }
+
+    .brand-logo h1 {
+        font-size: 32px;
+    }
+}
+
+@media (max-width: 768px) {
+    .footer-content {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+}
+
+@media (max-width: 480px) {
+    .form-section {
+        padding: 30px 25px;
+    }
+
+    .form-header h2 {
+        font-size: 26px;
+    }
+
+    .input-group input {
+        padding: 14px 16px;
+    }
+
+    .auth-wrapper {
+        border-radius: 16px;
+        max-height: 95vh;
+    }
+}
