@@ -1,0 +1,108 @@
+.nodes-layer {
+  position: relative;
+  min-height: 100%;
+}
+
+.connections {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+.node {
+  position: absolute;
+  width: 104px;
+  min-height: 104px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 18px;
+  padding: 8px;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: 6px;
+  cursor: pointer;
+  color: #fff;
+  text-align: center;
+  opacity: 0;
+  animation: nodePopIn 0.45s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation-delay: var(--delay, 0ms);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.3s ease,
+    background 0.35s ease, color 0.35s ease;
+}
+
+.node:hover:not(.locked) {
+  transform: translateY(-6px) scale(1.03);
+  border-color: rgba(255, 255, 255, 0.6);
+  box-shadow: 0 18px 28px rgba(0, 0, 0, 0.42), 0 0 0 4px rgba(255, 255, 255, 0.06);
+}
+
+.node-title {
+  font-size: 10px;
+  line-height: 1.25;
+  font-weight: 700;
+  max-height: 54px;
+  overflow: hidden;
+}
+
+.node-difficulty {
+  font-size: 9px;
+  text-transform: uppercase;
+  padding: 2px 6px;
+  border-radius: 999px;
+  letter-spacing: 0.5px;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.node-difficulty.basic {
+  background: rgba(46, 204, 113, 0.28);
+}
+
+.node-difficulty.intermediate {
+  background: rgba(241, 196, 15, 0.3);
+}
+
+.node-difficulty.advanced {
+  background: rgba(231, 76, 60, 0.35);
+}
+
+.node.locked {
+  background: linear-gradient(145deg, rgba(60, 60, 60, 0.7), rgba(35, 35, 35, 0.9));
+  color: rgba(255, 255, 255, 0.65);
+  cursor: not-allowed;
+}
+
+.node.available {
+  background: linear-gradient(145deg, rgba(30, 95, 168, 0.92), rgba(24, 72, 129, 0.92));
+  border-color: rgba(255, 255, 255, 0.34);
+  box-shadow: 0 0 0 0 rgba(30, 95, 168, 0.45);
+  animation: nodePopIn 0.45s cubic-bezier(0.22, 1, 0.36, 1) forwards,
+    nodePulse 2.3s ease-in-out infinite;
+  animation-delay: var(--delay, 0ms), calc(var(--delay, 0ms) + 450ms);
+}
+
+.node.completed {
+  background: linear-gradient(145deg, rgba(46, 204, 113, 0.95), rgba(27, 150, 80, 0.95));
+  border-color: rgba(196, 255, 219, 0.7);
+}
+
+@keyframes nodePopIn {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes nodePulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(30, 95, 168, 0.18);
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgba(30, 95, 168, 0);
+  }
+}

@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title data-i18n="app.title">Mahoraga Dashboard</title>
+    <script src="https://cdn.lordicon.com/lordicon.js"></script>
+      <link rel="icon" type="image/png" href="../img/logo.png">
+
+    <!-- CSS -->
+     <link rel="stylesheet" href="../css/components/user.css">
+    <link rel="stylesheet" href="../css/base/reset.css">
+    <link rel="stylesheet" href="../css/features/theme.css">
+    <link rel="stylesheet" href="../css/layout/dashboard.css">
+    <link rel="stylesheet" href="../css/components/buttons.css">
+    <link rel="stylesheet" href="../css/features/roadmap.css">
+    <link rel="stylesheet" href="../css/features/interview.css">
+    <link rel="stylesheet" href="../css/components/modalProfile.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+</head>
+
+<body>
+
+    <div class="dashboard">
+
+        <!-- ================= SIDEBAR ================= -->
+        <aside class="sidebar">
+
+            <button class="hamburger-toggle" title="Alternar barra lateral" aria-label="Alternar barra lateral" data-i18n-title="sidebar.toggle" data-i18n-aria-label="sidebar.toggle">
+              <lord-icon
+                       class="toggle-lordicon"
+                       src="../json-icons/system-solid-35-compare-hover-compare (1).json"
+                       trigger="hover"
+                         colors="primary:#ffffff"
+                       style="width:35px;height:35px;">
+                   </lord-icon>
+            </button>
+
+            <button title="Perfil" class="user-section" data-i18n-title="sidebar.profile">
+
+                <div class="user-avatar">
+               
+                </div>
+
+                <div class="user-info">
+                    <p class="username" data-i18n="profile.name">Name User</p>
+                    <div class="levels">
+                    </div>
+                </div>
+            </button>
+
+
+            <div class="technologies">
+                <button class="tech-btn python" data-tech="python">
+                    <img src="../img/assent/python.png" alt="logo-python" class="logo-python">
+                    <span>Python</span>
+                    <span class="percent">0%</span>
+                </button>
+
+                <button class="tech-btn html" data-tech="html">
+                    <img src="../img/assent/HTML.png" alt="logo-html" class="logo-html">
+                    <span>HTML</span>
+                    <span class="percent">0%</span>
+                </button>
+
+                <button class="tech-btn css" data-tech="css">
+                    <img src="../img/assent/CSS.png" alt="logo-css" class="logo-css">
+                    <span>CSS</span>
+                    <span class="percent">0%</span>
+                </button>
+
+                <button class="tech-btn javascript" data-tech="javascript">
+                    <img src="../img/assent/JavaScript.png" alt="logo-javascript" class="logo-javascript">
+                    <span>JS</span>
+                    <span class="percent">0%</span>
+                </button>
+
+                <button class="tech-btn sql" data-tech="sql">
+                    <img src="../img/assent/sql-removebg-preview.png" alt="logo-sql" class="logo-sql">
+                    <span>SQL</span>
+                    <span class="percent">0%</span>
+                </button>
+            </div>
+
+            <div class="sidebar-settings">
+                <lord-icon
+                       src="../json-icons/system-solid-63-settings-cog-hover-cog-3.json"
+                       trigger="hover"
+                         colors="primary:#ffffff"
+                       style="width:35px;height:35px;">
+                   </lord-icon>
+            </div>
+        </aside>
+    <!-- ============== FIN SIDEBAR ================= -->
+
+
+    <!-- ================= ROADMAP ================= -->
+    <main class="roadmap-container">
+
+        <div class="roadmap-viewport">
+
+            <div class="roadmap-world" id="roadmapWorld">
+
+                <!-- conexiones svg -->
+                <svg class="connections"></svg>
+
+                <!-- nodos -->
+                <div class="nodes-layer">
+                    <!-- Los nodos se crearán con JS -->
+                </div>
+
+            </div>
+
+            <!-- ================= CHAT VIEW ================= -->
+            <div class="chat-world" id="chatWorld" style="display: none;">
+                <div class="chat-container">
+                    <div class="chat-header">
+                        <h3 class="chat-title" data-i18n="chat.mode">Interview Mode</h3>
+                        <button class="chat-close-btn" id="closeChatBtn" title="Close Chat" data-i18n-title="chat.close">
+                            <lord-icon
+                                src="../json-icons/system-solid-29-cross-hover-cross-1.json"
+                                trigger="hover"
+                                colors="primary:#ffffff"
+                                style="width:28px;height:28px;">
+                            </lord-icon>
+                        </button>
+                    </div>
+                    
+                    <div class="chat-messages" id="chatMessages">
+                        <!-- Los mensajes aparecerán aquí -->
+                    </div>
+                    
+                    <div class="chat-input-area">
+                        <button class="chat-mic-btn" id="chatMicBtn" type="button" aria-label="Grabar respuesta por voz">
+                            <i class="bi bi-mic"></i>
+                        </button>
+                        <input
+                            type="text"
+                            id="chatInput"
+                            class="chat-input"
+                            placeholder="Type your answer..."
+                            data-i18n-placeholder="chat.placeholder"
+                            autocomplete="off">
+                        <button class="chat-send-btn" id="chatSendBtn">
+                            <lord-icon
+                                src="../json-icons/system-solid-161-arrow-long-right-hover-ternd-flat-1 (1).json"
+                                trigger="hover"
+                                style="width:28px;height:28px;">
+                            </lord-icon>
+                        </button>
+                        <span class="chat-mic-status" id="chatMicStatus">Click para grabar tu respuesta</span>
+                    </div>
+                    <div class="chat-feedback" id="chatFeedback" hidden></div>
+                </div>
+            </div>
+            <div class="audio-modal" id="audioModal" hidden>
+                <div class="audio-modal-card">
+                    <div class="audio-modal-header">
+                        <div>
+                            <p class="audio-modal-title">Captura de voz</p>
+                            <p class="audio-modal-subtitle">Graba tu respuesta con claridad. Puedes detener y enviar cuando quieras.</p>
+                        </div>
+                        <button class="audio-modal-close" id="audioModalClose" type="button" aria-label="Cerrar">
+                            <i class="bi bi-x-lg"></i>
+                        </button>
+                    </div>
+                    <div class="audio-modal-body">
+                        <div class="audio-indicator" id="audioIndicator">
+                            <div class="audio-indicator-core"></div>
+                        </div>
+                        <div class="audio-meta">
+                            <span id="audioTimer">00:00</span>
+                            <span id="audioStatus">Listo para grabar</span>
+                        </div>
+                        <div class="audio-actions">
+                            <button class="audio-action" id="audioRecordBtn" type="button">
+                                <i class="bi bi-record-circle"></i>
+                                <span>Grabar</span>
+                            </button>
+                            <button class="audio-action" id="audioStopBtn" type="button" disabled>
+                                <i class="bi bi-stop-circle"></i>
+                                <span>Detener</span>
+                            </button>
+                            <button class="audio-action primary" id="audioSendBtn" type="button" disabled>
+                                <i class="bi bi-send"></i>
+                                <span>Enviar</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ================= FIN CHAT VIEW ================= -->
+
+        </div>
+
+    </main>
+    <!-- ============== FIN ROADMAP ================= -->
+
+
+    <!-- ================= DETAIL PANEL ================= -->
+    <section class="detail-panel">
+
+        <div class="detail-card">
+
+            <div class="detail-header">
+                <h2 class="detail-title">CSS GRID</h2>
+                <button class="close-panel">
+                   <lord-icon
+                       src="../json-icons/system-solid-29-cross-hover-cross-1.json"
+                       trigger="hover"
+                         colors="primary:#ffffff"
+                       style="width:35px;height:35px;">
+                   </lord-icon>
+                </button>
+            </div>
+
+            <div class="detail-container">
+                <div class="technology-progress-section">
+                    <div class="technology-progress-meta">
+                        <h4 data-i18n="detail.progress">Technology Progress</h4>
+                        <span class="technology-progress-percent">0%</span>
+                    </div>
+                    <div class="technology-progress-track">
+                        <div class="technology-progress-fill"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="detail-container">
+                <div class="topics-section">
+                    <h4 data-i18n="detail.topics">Topics</h4>
+                    <ul class="topics-list">
+                        <li data-i18n="detail.default1">Grid container and grid items</li>
+                        <li data-i18n="detail.default2">Grid-template-columns / rows</li>
+                        <li data-i18n="detail.default3">Grid-gap and gap</li>
+                        <li data-i18n="detail.default4">Grid areas and template areas</li>
+                        <li data-i18n="detail.default5">Implicit vs explicit grid</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="detail-footer">
+                <button class="interview-btn">
+                    <span data-i18n="detail.interview">Interview</span>
+                    <lord-icon
+                       src="../json-icons/system-solid-47-chat-hover-chat.json"
+                       trigger="hover"
+                       colors="primary:#ffffff"
+                       style="width:28px;height:28px;">
+                    </lord-icon>
+                </button>
+            </div>
+               
+            
+        </div>
+
+
+
+    </section>
+    <!-- ============== FIN DETAIL PANEL ================= -->
+
+</div>
+
+
+    <div class="modalProfile">
+        <section class="container-one">
+            <article class="profile-view">
+                <div class="photo" id="photoContainer">
+                    <i class="bi bi-camera camera-icon"></i>
+
+                    <div class="overlay">
+                        <div class="actions">
+                            <i class="bi bi-pencil-fill edit"></i>
+                            <i class="bi bi-trash-fill delete"></i>
+                        </div>
+                    </div>
+                </div>
+                <h2 data-i18n="profile.name">Name user</h2>
+            </article>
+
+            <input type="file" id="photoInput" accept="image/*" hidden>
+
+
+
+            <article class="exit-profile">
+               <lord-icon
+                   class="exitLogo"
+                   src="../json-icons/system-solid-29-cross-hover-cross-1.json"
+                   trigger="hover"
+                     colors="primary:#ffffff"
+                   style="width:45px;height:45px;">
+               </lord-icon>
+            </article>
+
+        </section>
+
+        <section class="container-two">
+            <div class="total-process cardProfile">
+                <h3 data-i18n="profile.total">Total process</h3>
+                <div class="process-load">
+                    <div class="load">
+                        <p>20%</p>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="answers-mug cardProfile">
+                <h3 data-i18n="profile.answers">Answers mug</h3>
+                <div class="stat">
+                    <span class="label correct" data-i18n="profile.correct">Correct</span>
+                    <div class="bar-container">
+                        <div class="bar correct-bar" style="width: 76%"></div>
+                        <span class="percentage">76%</span>
+                    </div>
+                </div>
+                <div class="stat">
+                    <span class="label incorrect" data-i18n="profile.incorrect">Incorrect</span>
+                    <div class="bar-container">
+                        <div class="bar incorrect-bar" style="width: 24%"></div>
+                        <span class="percentage">24%</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="your-level">
+                <div class="content">
+                    <img src="../assets/colorful-bright-confetti-png.png" alt="">
+
+                </div>
+                <p data-i18n-html="profile.level_html">You have a <br> <span>Mid developer</span><br>level</p>
+
+            </div>
+
+            <div class="logros cardProfile">
+                <h3 data-i18n="profile.achievements">Achievements</h3>
+
+                <div class="achievement-item">
+                    <img src="../assets/insignia.png" alt="">
+                    <p data-i18n="profile.a1">Answer 5 questions correctly in a row at the Senior level.</p>
+                </div>
+
+                <div class="achievement-item">
+                    <img src="../assets/insignia.png" alt="">
+                    <p data-i18n="profile.a2">Answer 10 questions correctly at Junior level.</p>
+                </div>
+
+                <div class="achievement-item active">
+                    <img src="../assets/exito.png" alt="">
+                    <p data-i18n="profile.a3">Complete one level of any language at the Mid developer level.</p>
+                </div>
+
+                <div class="achievement-item">
+                    <img src="../assets/insignia.png" alt="">
+                    <p data-i18n="profile.a4">Complete 15 consecutive correct answers at the Senior level without a single mistake.</p>
+                </div>
+
+                <div class="achievement-item">
+                    <img src="../assets/insignia.png" alt="">
+                    <p data-i18n="profile.a5">Achieve a 100% score in a full Senior assessment test.</p>
+                </div>
+
+
+            </div>
+        </section>
+    </div>
+
+    <!-- ================= SETTINGS MODAL ================= -->
+    <div class="photo-action-backdrop" id="photoActionBackdrop"></div>
+    <div class="photo-action-modal" id="photoActionModal">
+        <h3 class="photo-action-title" data-i18n="photo.options">Opciones de foto</h3>
+        <div class="photo-action-buttons">
+            <button class="photo-action-btn photo-action-edit" type="button" data-i18n="photo.edit">Editar foto</button>
+            <button class="photo-action-btn danger photo-action-delete" type="button" data-i18n="photo.delete">Eliminar foto</button>
+            <button class="photo-action-btn photo-action-cancel" type="button" data-i18n="photo.cancel">Cancelar</button>
+        </div>
+    </div>
+    <div class="settings-modal-overlay" id="settingsOverlay">
+        <div class="settings-modal">
+            <div class="settings-header">
+                <h2 data-i18n="settings.title">Settings</h2>
+                <lord-icon
+                    class="settings-close"
+                    src="../json-icons/system-solid-29-cross-hover-cross-1.json"
+                    trigger="hover"
+                    colors="primary:#ffffff"
+                    style="width:28px;height:28px;">
+                </lord-icon>
+            </div>
+
+            <div class="settings-content">
+                <div class="settings-section">
+                    <h3 data-i18n="settings.language">Language</h3>
+                    <div class="theme-buttons">
+                        <button class="lang-btn active" data-lang="es">
+                            <i class="bi bi-translate"></i>
+                            <span data-i18n="settings.lang_es">Español</span>
+                        </button>
+                        <button class="lang-btn" data-lang="en">
+                            <i class="bi bi-translate"></i>
+                            <span data-i18n="settings.lang_en">English</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="settings-divider"></div>
+
+                <div class="settings-section">
+                    <button class="logout-btn">
+                        <i class="bi bi-box-arrow-right"></i>
+                        <span data-i18n="settings.logout">Logout</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ============== FIN SETTINGS MODAL ================= -->
+
+<!-- JS -->
+<script type="module" src="../js/mainDashboard.js"></script>
+<script type="module" src="../js/themeManager.js"></script>
+<script type="module" src="../js/interview.js"></script>
+
+</body>

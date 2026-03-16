@@ -1,0 +1,103 @@
+.user-section {
+    display: flex;
+    background-color: #1e1e1e;
+    align-items: center;
+    gap: 12px;
+
+    padding: 12px;
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.186);
+
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: white;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
+
+.user-section:hover {
+    background: #2a2a2a;
+     transform: translateY(-2px) scale(1.02);
+}
+
+/* IMAGEN */
+
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.262);
+    background: linear-gradient(145deg, #1f1f1f, #2f2f2f);
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+
+.user-avatar:hover{
+    background-color: rgb(65, 65, 65);
+}
+
+.user-avatar::before {
+    content: "\f4da";
+    font-family: "bootstrap-icons";
+    color: rgba(255, 255, 255, 0.62);
+    font-size: 16px;
+}
+
+.user-avatar.has-image::before {
+    content: "";
+}
+
+.user-avatar.is-updated {
+    animation: avatarRefresh 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes avatarRefresh {
+    0% {
+        transform: scale(0.9);
+        filter: brightness(0.8);
+    }
+    70% {
+        transform: scale(1.05);
+        filter: brightness(1.15);
+    }
+    100% {
+        transform: scale(1);
+        filter: brightness(1);
+    }
+}
+
+.user-avatar i {
+    font-size: 1.2rem;
+}
+
+/* LOGOS */
+
+.logo {
+    width: 65px;
+}
+
+.logo-python {
+    width: 40px;
+}
+
+.logo-html {
+    width: 40px;
+}
+
+.logo-css {
+    width: 40px;
+}
+
+.logo-javascript {
+    width: 40px;
+    border-radius: 8px;
+}
+
+.logo-sql {
+    width: 50px;
+}

@@ -1,0 +1,277 @@
+
+@media (max-width: 900px) {
+    .auth-wrapper {
+        flex-direction: column;
+        height: auto;
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+
+    .brand-panel,
+    .forms-panel {
+        width: 100%;
+    }
+
+    .brand-panel {
+        padding: 40px;
+        order: 1 !important;
+    }
+
+    .forms-panel {
+        order: 2 !important;
+    }
+
+    .form-section {
+        padding: 40px 30px;
+    }
+
+    .logo-circle {
+        width: 90px;
+        height: 90px;
+    }
+
+    .logo-circle span {
+        font-size: 48px;
+    }
+
+    .brand-logo h1 {
+        font-size: 32px;
+    }
+}
+
+@media (max-width: 1200px) {
+    .cards-materias {
+        flex-wrap: wrap;
+        gap: 2rem;
+        margin-top: 3rem;
+    }
+
+    .card,
+    .card-alfa,
+    .cardOne {
+        width: min(320px, 92vw);
+        height: auto;
+    }
+
+    .card-alfa img,
+    .card-rigth img,
+    .card-left img {
+        width: min(420px, 90vw);
+        right: 0;
+        bottom: 0;
+    }
+
+    .card-left,
+    .card-rigth,
+    .card-alfa {
+        transform: none;
+        margin-top: 0;
+        bottom: 0;
+        filter: brightness(100%);
+    }
+
+    .card-left:hover,
+    .card-rigth:hover,
+    .card-alfa:hover {
+        transform: translateY(-1.5rem);
+    }
+
+    .cardOne {
+        margin: 0;
+    }
+
+    .empty-cards-section {
+        margin-top: 10rem;
+    }
+
+    .roles-header {
+        padding: 0 2rem 2rem;
+    }
+
+    .role-card {
+        min-width: min(620px, 88vw);
+        height: 420px;
+    }
+}
+
+@media (max-width: 768px) {
+    header {
+        justify-content: center;
+    }
+
+    .container-logo {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .nav ul {
+        justify-content: center;
+    }
+
+    .buttons-login {
+        width: 100%;
+        justify-content: center;
+        gap: 0.6rem;
+    }
+
+    .line {
+        margin: 0 0.4rem;
+        font-size: 2rem;
+    }
+
+    .slogan h1 {
+        font-size: clamp(2.2rem, 6vw, 3rem);
+        margin-top: -1rem;
+    }
+
+    .slogan p {
+        font-size: 0.95rem;
+        padding: 0 1rem;
+    }
+
+    .interfaz img {
+        margin-top: 1.5rem;
+    }
+
+    .adaptation-title {
+        font-size: clamp(3rem, 12vw, 6rem);
+    }
+
+    .roles-header {
+        padding: 0 1.5rem 2rem;
+    }
+
+    .roles-header-content {
+        max-width: 100%;
+        text-align: left;
+    }
+
+    .role-card {
+        min-width: 90vw;
+        height: 380px;
+    }
+
+    .about {
+        flex-direction: column;
+        align-items: center;
+        gap: 2rem;
+        padding: 0 1.5rem;
+    }
+
+    .we {
+        grid-template-columns: 1fr;
+        max-height: none;
+    }
+
+    .descriptionEmpresa {
+        width: min(520px, 90vw);
+        text-align: center;
+    }
+
+    .mahoragaLogo {
+        width: min(520px, 90vw);
+    }
+
+    .footer-content {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        margin-top: 12rem;
+    }
+
+    .logo img {
+        width: 54px;
+    }
+
+    .line {
+        display: none;
+    }
+
+    .slogan {
+        margin-top: 6rem;
+    }
+
+    .card,
+    .card-alfa,
+    .cardOne {
+        padding: 1.5rem;
+    }
+
+    .role-card {
+        height: 340px;
+        padding: 1.2rem;
+    }
+
+    .cardWe img {
+        width: min(220px, 70vw);
+        height: auto;
+    }
+
+    .form-section {
+        padding: 30px 25px;
+    }
+
+    .form-header h2 {
+        font-size: 26px;
+    }
+
+    .input-group input {
+        padding: 14px 16px;
+    }
+
+    .auth-wrapper {
+        border-radius: 16px;
+        max-height: 95vh;
+    }
+}
+
+@media (min-width: 1600px) {
+    body {
+        margin-top: 11rem;
+    }
+
+    .slogan h1 {
+        font-size: clamp(3.4rem, 2.8vw, 4.6rem);
+    }
+
+    .slogan p {
+        font-size: 1.1rem;
+        max-width: 900px;
+        margin: 0 auto;
+    }
+
+    .interfaz img {
+        width: min(1400px, 95%);
+    }
+
+    .card {
+        width: 340px;
+        height: 480px;
+    }
+
+    .card-alfa {
+        width: 440px;
+        height: 640px;
+    }
+
+    .cardOne {
+        width: 340px;
+    }
+
+    .role-card {
+        min-width: 900px;
+        height: 560px;
+    }
+
+    .mahoragaLogo {
+        width: min(1000px, 65vw);
+    }
+
+    .descriptionEmpresa {
+        width: min(650px, 40vw);
+    }
+}

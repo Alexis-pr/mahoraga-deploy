@@ -1,0 +1,36 @@
+{
+  "name": "mahoraga-integrative-project-tesla",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/server.js",
+  "scripts": {
+    "dev": "nodemon src/server.js",
+    "start": "node src/server.js",
+    "check:db": "node src/scripts/checkDb.js",
+    "seed:interview": "node src/scripts/seedInterviewQuestions.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Riwi-io-Medellin/mahoraga-integrative-project-tesla.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/Riwi-io-Medellin/mahoraga-integrative-project-tesla/issues"
+  },
+  "homepage": "https://github.com/Riwi-io-Medellin/mahoraga-integrative-project-tesla#readme",
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  },
+  "dependencies": {
+    "cors": "^2.8.6",
+    "dotenv": "^17.3.1",
+    "express": "^5.2.1",
+    "pg": "^8.20.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

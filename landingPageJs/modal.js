@@ -1,0 +1,342 @@
+import { createUser, UserCreateDTO, loginUser, getUsers } from './authApi.js'
+import {
+    validateUsername,
+    validatePassword,
+    validateLoginIdentifier,
+    validateEmail,
+    showAlert,
+} from './validation.js';
+import { clearLoggedInUser, setLoggedInUser } from '../js/services/sessionService.js';
+
+export function initAuthModal() {
+    const authModal = document.getElementById('authModal');
+    const authWrapper = document.getElementById('authWrapper');
+    const brandPanel = document.getElementById('brandPanel');
+    const loginSection = document.getElementById('loginSection');
+    const registerSection = document.getElementById('registerSection');
+    const openLoginBtn = document.getElementById('openLoginBtn');
+    const openRegisterBtn = document.getElementById('openRegisterBtn');
+    const modalClose = document.getElementById('modalClose');
+    const modalOverlay = document.getElementById('modalOverlay');
+    const loginLoader = document.getElementById('loginLoader');
+    const switchToRegister = document.getElementById('switchToRegister');
+    const switchToLogin = document.getElementById('switchToLogin');
+    const loginForm = document.getElementById('loginForm');
+    const registerForm = document.getElementById('registerForm');
+    const dots = document.querySelectorAll('.dot');
+    const h1 = document.getElementById('h1Mahoraga');
+
+    function updateLogoColor(isRegisterMode) {
+        const logoLogin = document.querySelector('.logoLogin');
+        const logoCircle = document.querySelector('.logo-circle');
+        const brandPanel = document.getElementById('brandPanel');
+        
+        if (logoLogin && logoCircle) {
+            logoCircle.style.transform = 'scale(0.95)';
+            logoLogin.style.transform = 'scale(0.95)';
+            
+            setTimeout(() => {
+                if (isRegisterMode) {
+                    logoLogin.style.filter = 'brightness(100%)';
+                    logoCircle.style.background = 'linear-gradient(135deg, #000000 0%, #000000 100%)';
+                    logoCircle.style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.5)';
+                    if (brandPanel) {
+                        brandPanel.style.background = 'linear-gradient(135deg, #ffffff 0%, #e0e0e0 100%)';
+                        h1.style.color = 'black';
+                    }
+                } else {
+                    logoLogin.style.filter = 'brightness(1%)';
+                    logoCircle.style.background = 'linear-gradient(135deg, #ffffff 0%, #e0e0e0 100%)';
+                    logoCircle.style.boxShadow = '0 10px 30px rgba(255, 255, 255, 0.2)';
+                    h1.style.color = 'white';
+                    if (brandPanel) {
+                        brandPanel.style.background = 'linear-gradient(135deg, #1a1a1a 0%, #000000 50%, #000000 100%)';
+                    }
+                }
+            }, 100);
+            
+            setTimeout(() => {
+                logoCircle.style.transform = 'scale(1.05)';
+                logoLogin.style.transform = 'scale(1.05)';
+            }, 150);
+            
+            setTimeout(() => {
+                logoCircle.style.transform = 'scale(1)';
+                logoLogin.style.transform = 'scale(1)';
+            }, 300);
+        }
+    }
+
+    function showLoginLoader() {
+        if (!loginLoader) return;
+        loginLoader.classList.add('active');
+        loginLoader.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+    }
+
+    if (openLoginBtn) {
+        openLoginBtn.addEventListener('click', () => {
+            authModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            
+            authWrapper.classList.remove('register-mode');
+            registerSection.classList.remove('active');
+            loginSection.classList.add('active');
+            updateDots(0);
+            
+            setTimeout(() => {
+                updateLogoColor(false);
+            }, 100);
+        });
+    }
+
+    if (openRegisterBtn) {
+        openRegisterBtn.addEventListener('click', () => {
+            authModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            
+            setTimeout(() => {
+                switchToRegisterView();
+            }, 100);
+        });
+    }
+
+    function closeModal() {
+        authModal.classList.remove('active');
+        document.body.style.overflow = '';
+        
+        if (loginForm) loginForm.reset();
+        if (registerForm) registerForm.reset();
+        
+        const alerts = document.querySelectorAll('.alert');
+        alerts.forEach(alert => alert.remove());
+    }
+
+    if (modalClose) {
+        modalClose.addEventListener('click', closeModal);
+    }
+
+    if (modalOverlay) {
+        modalOverlay.addEventListener('click', closeModal);
+    }
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && authModal.classList.contains('active')) {
+            closeModal();
+        }
+    });
+
+    function switchToRegisterView() {
+        brandPanel.classList.add('fade-out');
+        brandPanel.classList.remove('fade-in');
+        loginSection.classList.remove('active');
+        
+        setTimeout(() => {
+            authWrapper.classList.add('register-mode');
+            updateDots(1);
+            updateLogoColor(true);
+        }, 250);
+        
+        setTimeout(() => {
+            brandPanel.classList.remove('fade-out');
+            brandPanel.classList.add('fade-in');
+        }, 500);
+        
+        setTimeout(() => {
+            registerSection.classList.add('active');
+        }, 350);
+    }
+
+    function switchToLoginView() {
+        brandPanel.classList.add('fade-out');
+        brandPanel.classList.remove('fade-in');
+        registerSection.classList.remove('active');
+        
+        setTimeout(() => {
+            authWrapper.classList.remove('register-mode');
+            updateDots(0);
+            updateLogoColor(false);
+        }, 250);
+        
+        setTimeout(() => {
+            brandPanel.classList.remove('fade-out');
+            brandPanel.classList.add('fade-in');
+        }, 500);
+        
+        setTimeout(() => {
+            loginSection.classList.add('active');
+        }, 350);
+    }
+
+    if (switchToRegister) {
+        switchToRegister.addEventListener('click', (e) => {
+            e.preventDefault();
+            switchToRegisterView();
+        });
+    }
+
+    if (switchToLogin) {
+        switchToLogin.addEventListener('click', (e) => {
+            e.preventDefault();
+            switchToLoginView();
+        });
+    }
+
+    function updateDots(activeIndex) {
+        dots.forEach((dot, index) => {
+            if (index === activeIndex) {
+                dot.classList.add('active');
+            } else {
+                dot.classList.remove('active');
+            }
+        });
+    }
+
+  if (loginForm) {
+    loginForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        // Este valor sale del input del front con id="loginUser" en index.html.
+        const usernameOrEmail = document.getElementById('loginUser').value.trim();
+        // Este valor sale del input del front con id="loginPass" en index.html.
+        const password = document.getElementById('loginPass').value;
+
+        // Esta validacion acepta email valido o username valido para login.
+        const identifierError = validateLoginIdentifier(usernameOrEmail);
+        if (identifierError) {
+            showAlert(loginForm, identifierError, 'error');
+            return;
+        }
+
+        // Esta validacion reutiliza tu regla de password antes de llamar al backend.
+        const passwordError = validatePassword(password);
+        if (passwordError) {
+            showAlert(loginForm, passwordError, 'error');
+            return;
+        }
+
+        try {
+            // Esta llamada envia los valores capturados al endpoint de login del backend.
+            const { isValid, user } = await loginUser(usernameOrEmail, password);
+            if (!isValid || !user) {
+                showAlert(loginForm, 'Credenciales invalidas', 'error');
+                return;
+            }
+
+            if (!user.id_user) {
+                try {
+                    const users = await getUsers();
+                    const lowerId = usernameOrEmail.toLowerCase();
+                    const matched = Array.isArray(users)
+                      ? users.find((entry) =>
+                          String(entry?.email || '').toLowerCase() === lowerId ||
+                          String(entry?.user_name || '').toLowerCase() === lowerId
+                        )
+                      : null;
+
+                    if (matched?.id_user) {
+                        user.id_user = matched.id_user;
+                    }
+                } catch (innerError) {
+                    console.error('No se pudo resolver id_user:', innerError);
+                }
+            }
+
+            if (!user.id_user) {
+                showAlert(loginForm, 'No se pudo resolver el id_user de la cuenta.', 'error');
+                return;
+            }
+
+            // Login success
+            showAlert(loginForm, `Welcome, ${user.user_name}!`, 'success');
+
+            // Este sessionStorage guarda lo que retorno backend para mantener sesion.
+            clearLoggedInUser();
+            setLoggedInUser(user);
+
+            // redirect to dashboard
+            setTimeout(() => {
+                showLoginLoader();
+                authModal.classList.remove('active');
+                setTimeout(() => {
+                    window.location.href = './pages/dashboard.html'; // Cambia por tu página real
+                }, 900);
+            }, 300);
+
+        } catch (error) {
+            console.error(error);
+            showAlert(loginForm, error.message || 'Error logging in. Try again later.', 'error');
+        }
+    });
+}
+   if (registerForm) {
+    registerForm.addEventListener('submit', async (e) => {
+        e.preventDefault(); // avoid recharge the page
+
+        const username = document.getElementById('registerUser').value.trim();
+        const email = document.getElementById('registerEmail')?.value.trim() || '';
+        const password = document.getElementById('registerPass').value;
+        const confirmPassword = document.getElementById('registerConfirm').value;
+
+        // Validations
+        const usernameError = validateUsername(username);
+        if (usernameError) {
+            showAlert(registerForm, usernameError, 'error');
+            return;
+        }
+
+        const emailError = validateEmail(email);
+        if (emailError) {
+            showAlert(registerForm, emailError, 'error');
+            return;
+        }
+
+        const passwordError = validatePassword(password);
+        if (passwordError) {
+            showAlert(registerForm, passwordError, 'error');
+            return;
+        }
+
+        if (password !== confirmPassword) {
+            showAlert(registerForm, 'Passwords do not match', 'error');
+            return;
+        }
+
+        // Create DTO
+        const userDTO = new UserCreateDTO({
+            user_name: username,
+            email: email,
+            password: password
+        });
+
+        try {
+            // call Api to create new user
+            const newUser = await createUser(userDTO);
+
+            // Mostrar mensaje de éxito
+            showAlert(registerForm, 'Account created successfully!', 'success');
+            registerForm.reset();
+
+            // Después de 2 segundos, cambiar a login
+            setTimeout(() => {
+                switchToLoginView();
+            }, 2000);
+
+        } catch (error) {
+            console.error(error);
+            showAlert(registerForm, error.message || 'Error creating account. Try again later.', 'error');
+        }
+    });
+}
+    // Add simple animation for input focus
+    const inputs = document.querySelectorAll('.input-group input');
+    inputs.forEach(input => {
+        input.addEventListener('focus', function() {
+            this.parentElement.style.transform = 'translateY(-2px)'; // move input up a bit
+        });
+
+        input.addEventListener('blur', function() {
+            this.parentElement.style.transform = 'translateY(0)'; // move input back
+        });
+    });
+};

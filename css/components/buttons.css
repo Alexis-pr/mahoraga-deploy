@@ -1,0 +1,102 @@
+/* CONTENEDOR */
+
+.technologies {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 22px;
+}
+
+
+/* BOTÓN BASE */
+
+.tech-btn {
+    width: 100%;
+    min-height: 52px;
+    padding: 10px 12px;
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+
+    color: #fff;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    cursor: pointer;
+    transition: transform 0.22s ease, filter 0.22s ease, box-shadow 0.22s ease,
+      border-color 0.22s ease, background 0.3s ease, color 0.3s ease;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.28);
+    text-align: left;
+}
+
+.tech-btn img {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
+.tech-btn .logo-sql {
+    width: 34px;
+}
+
+/* ESTADOS */
+
+/* BACKGROUND BOTONES */
+
+.python {
+    background: linear-gradient(135deg, #2b58767d, #3777ab8d);
+}
+
+.html {
+    background: linear-gradient(135deg, #7e2e1778, #e34f2682);
+}
+
+.css {
+    background: linear-gradient(135deg, #173e9c7d, #2965f187);
+}
+
+.javascript {
+    background: linear-gradient(135deg, #857a1a7e, #c6b32685);
+}
+
+.sql {
+    background: linear-gradient(135deg, #1c2a6b70, #293d927f);
+}
+
+.tech-btn.python.active {
+    background: linear-gradient(135deg, #1f4f73, #2e6f9f);
+}
+
+.tech-btn.css.active {
+    background: linear-gradient(135deg, #1843a4, #2f6fff);
+}
+
+.tech-btn.html.active {
+    background: linear-gradient(135deg, #a9391a, #e35a2d);
+}
+
+.tech-btn.javascript.active {
+    background: linear-gradient(135deg, #9c8d1f, #d6c12f);
+}
+
+.tech-btn.sql.active {
+    background: linear-gradient(135deg, #1d2c70, #3348a8);
+}
+
+/* TEXTO */
+
+.tech-name {
+    font-weight: 600;
+}
+
+.percent {
+    margin-left: auto;
+    font-size: 12px;
+    opacity: 0.78;
+}
