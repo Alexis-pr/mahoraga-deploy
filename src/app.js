@@ -9,6 +9,7 @@ import interviewRouter from './modules/interview/interview.route.js'
 import voiceRouter from './modules/voice/voice.route.js'
 
 const app = express()
+app.use(cors())
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
@@ -23,7 +24,7 @@ app.use((req, res, next) => {
   }
   next();
 })
-app.use(cors())
+
 app.use(express.static(path.join(__dirname, '..')))
 app.use('/api/questions', routerQuestion)
 app.use('/api/users', routerUser)
